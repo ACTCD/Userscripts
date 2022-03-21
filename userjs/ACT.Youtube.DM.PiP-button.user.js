@@ -1,16 +1,16 @@
 // ==UserScript==
-// @name			ACT.Youtube.DM.PiP-button
-// @description		Add a PiP button to the player to easy enter Picture-in-Picture mode.
-// @author			ACTCD
-// @version			20220321.1
-// @namespace		https://t.me/ACTCD
-// @supportURL		https://t.me/ACTDC
-// @homepageURL		https://github.com/ACTCD/Userscripts
-// @updateURL		https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Youtube.DM.PiP-button.user.js
-// @downloadURL		https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Youtube.DM.PiP-button.user.js
-// @match			*://*.youtube.com/*
-// @grant			none
-// @run-at			document-start
+// @name               ACT.Youtube.DM.PiP-button
+// @description        Add a PiP button to the player to easy enter Picture-in-Picture mode.
+// @author             ACTCD
+// @version            20220321.1
+// @namespace          https://t.me/ACTCD
+// @supportURL         https://t.me/ACTDC
+// @homepageURL        https://github.com/ACTCD/Userscripts
+// @updateURL          https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Youtube.DM.PiP-button.user.js
+// @downloadURL        https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Youtube.DM.PiP-button.user.js
+// @match              *://*.youtube.com/*
+// @grant              none
+// @run-at             document-start
 // ==/UserScript==
 
 (function () {
