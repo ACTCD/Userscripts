@@ -6,7 +6,7 @@ Script naming specification:
 [Prefix].[Website].[Platform].[Action].user.js
 - [Prefix] = ACT
 - [Website] = Website name
-- [Platform] = DO/MO/DM (D=Desktop,M=Mobile,O=Only)
+- [Platform] = DM/DO/MO (D=Desktop,M=Mobile,O=Only)
 - [Action] = Main features
 
 ## Contact
