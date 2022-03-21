@@ -3,9 +3,21 @@ Committed to creating mobile user scripts to improve your mobile browser browsin
 
 ## Contact
 
+- **Matrix Channel**
+
+    https://matrix.to/#/#ACTCD:matrix.org
+
+- **Matrix Group**
+
+    https://matrix.to/#/#ACTDC:matrix.org
+
 - **Telegram Channel**
 
     https://t.me/ACTCD
+
+- **Telegram Group**
+
+    https://t.me/ACTDC
 
 ## Mirror Repositories
 - [Greasy Fork](https://greasyfork.org/zh-CN/users/885672-actcd)
