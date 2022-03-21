@@ -1,5 +1,13 @@
 # Userscripts
-Committed to creating mobile user scripts to improve your mobile browser browsing experience.
+Committed to creating desktop and mobile user scripts to improve your browser browsing experience.
+
+Script naming specification:
+
+[Prefix].[Website].[Platform].[Action].user.js
+- [Prefix] = ACT
+- [Website] = Website name
+- [Platform] = DO/MO/DM (D=Desktop,M=Mobile,O=Only)
+- [Action] = Main features
 
 ## Contact
 
