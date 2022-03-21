@@ -40,8 +40,7 @@
         event.stopImmediatePropagation();
     });
 
-    new MutationObserver((mutationList) => {
-        console.log(mutationList);
+    new MutationObserver(mutationList => {
         // Hide shorts icon
         document.querySelectorAll('ytd-grid-video-renderer[is-shorts] [overlay-style="SHORTS"]').forEach(e => e.style.setProperty('display', 'none'));
         document.querySelectorAll('ytm-compact-video-renderer [data-style="SHORTS"]').forEach(e => e.style.setProperty('display', 'none'));
