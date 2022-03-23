@@ -2,9 +2,10 @@
 // @name               ACT.Youtube.DM.Auto-translate
 // @description        Automatically translate any non-specified language Subtitles/CC.
 // @author             ACTCD
-// @version            20220322.1
-// @namespace          https://t.me/ACTCD
-// @supportURL         https://t.me/ACTDC
+// @version            20220323.1
+// @license            GPL-3.0-or-later
+// @namespace          ACTCD/Userscripts
+// @supportURL         https://github.com/ACTCD/Userscripts#contact
 // @homepageURL        https://github.com/ACTCD/Userscripts
 // @updateURL          https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Youtube.DM.Auto-translate.user.js
 // @downloadURL        https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Youtube.DM.Auto-translate.user.js
@@ -19,14 +20,25 @@
 
     const inline_script = () => {
         const tlang = 'zh-CN'; // Specified language
+        const cache = { req_url: null, obj_url: null };
         const XMLHttpRequest_open = XMLHttpRequest.prototype.open;
         XMLHttpRequest.prototype.open = function () {
-            let url = new URL(arguments[1], location.href);
+            const url = new URL(arguments[1], location.href);
             if (url.pathname == '/api/timedtext') {
-                let lang = url.searchParams.get('lang');
+                const lang = url.searchParams.get('lang');
                 if (lang && lang != tlang) {
-                    url.searchParams.set('tlang', tlang);
-                    arguments[1] = url.href;
+                    const req_url = url.href;
+                    if (req_url == cache.req_url) {
+                        arguments[1] = cache.obj_url;
+                    } else {
+                        URL.revokeObjectURL(cache.obj_url);
+                        this.addEventListener('load', event => {
+                            cache.req_url = req_url;
+                            cache.obj_url = URL.createObjectURL(new Blob([this.responseText]));
+                        });
+                        url.searchParams.set('tlang', tlang);
+                        arguments[1] = url.href;
+                    }
                 }
             }
             XMLHttpRequest_open.apply(this, arguments);
