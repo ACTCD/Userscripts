@@ -2,9 +2,10 @@
 // @name               ACT.Youtube.DM.Shorts2watch
 // @description        Back to watch page from shorts feeds by one-click button, open shorts on the watch page in channel videos.
 // @author             ACTCD
-// @version            20220322.1
-// @namespace          https://t.me/ACTCD
-// @supportURL         https://t.me/ACTDC
+// @version            20220323.1
+// @license            GPL-3.0-or-later
+// @namespace          ACTCD/Userscripts
+// @supportURL         https://github.com/ACTCD/Userscripts#contact
 // @homepageURL        https://github.com/ACTCD/Userscripts
 // @updateURL          https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Youtube.DM.Shorts2watch.user.js
 // @downloadURL        https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Youtube.DM.Shorts2watch.user.js
@@ -17,20 +18,31 @@
     'use strict';
 
     const button = document.createElement('button');
+    button.id = 'ACT_Shorts2watch';
     button.innerText = 'Back to watch';
-    button.style.setProperty('color', 'white');
-    button.style.setProperty('background-color', 'transparent');
-    button.style.setProperty('border', '2px solid');
-    button.style.setProperty('border-radius', '10px');
-    button.style.setProperty('padding', '1px 5px');
-    button.style.setProperty('font-size', '1.5em');
-    button.style.setProperty('font-weight', '500');
-    button.style.setProperty('text-shadow', 'black 1px 1px 2px');
+    const style = document.createElement('style');
+    style.textContent = `
+#ACT_Shorts2watch {
+    border: 2px solid;
+    border-radius: 10px;
+    padding: 1px 5px;
+    font-size: 1.8em;
+    font-weight: 500;
+    font-family: Roboto,Arial,sans-serif;
+    color: black;
+    background-color: transparent;
+}
+@media (prefers-color-scheme: dark) {
+    #ACT_Shorts2watch { color: white; } 
+}
+`;
     if (location.hostname == 'm.youtube.com') {
         button.style.setProperty('position', 'fixed');
         button.style.setProperty('z-index', '100');
         button.style.setProperty('top', '8px');
         button.style.setProperty('right', '8px');
+        button.style.setProperty('color', 'white');
+        button.style.setProperty('text-shadow', 'black 1px 1px 2px');
     }
     button.addEventListener("click", event => {
         if (location.pathname.slice(0, 8) == '/shorts/') {
@@ -88,5 +100,16 @@
             }
         };
     }, true);
+
+    if (document.head) {
+        document.head.appendChild(style);
+    } else {
+        new MutationObserver((mutationList, observer) => {
+            if (document.head) {
+                observer.disconnect();
+                document.head.appendChild(style);
+            }
+        }).observe(document, { subtree: true, childList: true });
+    }
 
 })();
