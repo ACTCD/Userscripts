@@ -2,9 +2,10 @@
 // @name               ACT.Youtube.DM.PiP-button
 // @description        Add a PiP button to the player to easy enter Picture-in-Picture mode.
 // @author             ACTCD
-// @version            20220321.1
-// @namespace          https://t.me/ACTCD
-// @supportURL         https://t.me/ACTDC
+// @version            20220323.1
+// @license            GPL-3.0-or-later
+// @namespace          ACTCD/Userscripts
+// @supportURL         https://github.com/ACTCD/Userscripts#contact
 // @homepageURL        https://github.com/ACTCD/Userscripts
 // @updateURL          https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Youtube.DM.PiP-button.user.js
 // @downloadURL        https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Youtube.DM.PiP-button.user.js
