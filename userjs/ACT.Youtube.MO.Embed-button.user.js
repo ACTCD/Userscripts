@@ -2,9 +2,10 @@
 // @name               ACT.Youtube.MO.Embed-button
 // @description        Go to Embed page to uses auto-translate on in-page fullscreen player, for mobile users.
 // @author             ACTCD
-// @version            20220322.1
-// @namespace          https://t.me/ACTCD
-// @supportURL         https://t.me/ACTDC
+// @version            20220323.1
+// @license            GPL-3.0-or-later
+// @namespace          ACTCD/Userscripts
+// @supportURL         https://github.com/ACTCD/Userscripts#contact
 // @homepageURL        https://github.com/ACTCD/Userscripts
 // @updateURL          https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Youtube.MO.Embed-button.user.js
 // @downloadURL        https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Youtube.MO.Embed-button.user.js
@@ -18,7 +19,7 @@
     'use strict';
 
     const button = document.createElement("button");
-    button.id = "enterEmbed";
+    button.id = "ACT_Embed";
     button.innerText = "Embed";
     button.style.setProperty('color', 'white');
     button.style.setProperty('background-color', 'transparent');
