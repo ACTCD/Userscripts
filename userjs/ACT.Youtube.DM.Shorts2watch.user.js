@@ -2,7 +2,7 @@
 // @name               ACT.Youtube.DM.Shorts2watch
 // @description        Back to watch page from shorts feeds by one-click button, open shorts on the watch page in channel videos.
 // @author             ACTCD
-// @version            20220323.1
+// @version            20220325.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -60,11 +60,11 @@
         if (location.pathname.slice(0, 8) == '/shorts/') {
             if (location.hostname == 'm.youtube.com') {
                 let t = document.body;
-                if (t && t != button.parentNode) t.appendChild(button);
+                t && t != button.parentNode && t.appendChild(button);
             }
             if (location.hostname == 'www.youtube.com') {
                 let t = document.querySelector('#masthead #logo');
-                if (t && t.nextElementSibling != button) t.after(button);
+                t && t.nextElementSibling != button && t.after(button);
             }
         } else {
             button.remove();
@@ -98,7 +98,7 @@
                     event.stopImmediatePropagation();
                 }
             }
-        };
+        }
     }, true);
 
     if (document.head) {
