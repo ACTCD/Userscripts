@@ -2,7 +2,7 @@
 // @name               ACT.Youtube.DM.PiP-button
 // @description        Add a PiP button to the player to easy enter Picture-in-Picture mode.
 // @author             ACTCD
-// @version            20220323.1
+// @version            20220325.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -50,17 +50,17 @@
         console.log('Your browser cannot use picture-in-picture right now');
     }
 
-    // Insert PiP Button (desktop) // Fixed once for Safari
-    let b = document.querySelector(".ytp-miniplayer-button");
-    if (b) b.parentNode.insertBefore(pip_button, b);
+    // Insert PiP Button (desktop) // Fixed once for unreliable @run-at document-start
+    document.querySelector(".ytp-miniplayer-button")?.before(pip_button);
 
     // Video element initialization
     const pip_init = video => {
+        if (!video || video.nodeName != 'VIDEO' || !video.hasAttribute("src")) return;
         video.addEventListener('webkitpresentationmodechanged', e => e.stopPropagation(), true); // PiP Fix
         video.addEventListener("leavepictureinpicture", onExitPip);
         video.addEventListener('enterpictureinpicture', onEnterPip);
     }
-    let v = document.querySelector('video[src]'); if (v) pip_init(v); // Fixed once for Safari
+    pip_init(document.querySelector('video[src]')); // Fixed once for unreliable @run-at document-start
 
     // Dynamic adjustment
     new MutationObserver(mutationList => {
@@ -68,23 +68,17 @@
             if (mutation.type == 'childList') {
                 mutation.addedNodes.forEach(node => {
                     if (node.nodeType != Node.ELEMENT_NODE) return;
-                    if (node.nodeName == 'VIDEO' && node.hasAttribute("src")) pip_init(node);
+                    node.nodeName == 'VIDEO' && pip_init(node);
                     if (node.id == "player-control-overlay") { // Insert PiP Button (mobile)
                         new MutationObserver(() => {
-                            if (node.classList.contains("fadein")) {
-                                node.append(pip_button);
-                            }
+                            node.classList.contains("fadein") && node.append(pip_button);
                         }).observe(node, { attributes: true });
                     }
-                    if (node.classList.contains("ytp-miniplayer-button")) { // Insert PiP Button (desktop)
-                        node.parentNode.insertBefore(pip_button, node);
-                    }
+                    node.classList.contains("ytp-miniplayer-button") && node.before(pip_button); // Insert PiP Button (desktop)
                 })
             }
             if (mutation.type == 'attributes') { // Enter video from the homepage
-                if (mutation.target.nodeName == 'VIDEO' && mutation.attributeName == 'src' && mutation.target.hasAttribute("src")) {
-                    pip_init(mutation.target);
-                }
+                mutation.target.nodeName == 'VIDEO' && mutation.attributeName == 'src' && pip_init(mutation.target);
             }
         });
     }).observe(document, { subtree: true, childList: true, attributes: true });
