@@ -1,0 +1,27 @@
+// ==UserScript==
+// @name               ACT.Google.MO.Auto-Seemore
+// @description        Mobile google search See more automatically.
+// @author             ACTCD
+// @version            20220324.1
+// @license            GPL-3.0-or-later
+// @namespace          ACTCD/Userscripts
+// @supportURL         https://github.com/ACTCD/Userscripts#contact
+// @homepageURL        https://github.com/ACTCD/Userscripts
+// @updateURL          https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Google.MO.Auto-Seemore.user.js
+// @downloadURL        https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Google.MO.Auto-Seemore.user.js
+// @match              *://*.google.com/*
+// @match              *://*.google.com.hk/*
+// @grant              none
+// @run-at             document-start
+// ==/UserScript==
+
+(function () {
+    'use strict';
+
+    window.addEventListener('scroll', () => {
+        if ((window.pageYOffset + window.innerHeight * 2) < document.body.clientHeight) return;
+        let button = document.querySelector("a[aria-label='See more'],a[aria-label='查看更多']");
+        if (button?.style.display != "none") button?.click();
+    });
+
+})();
