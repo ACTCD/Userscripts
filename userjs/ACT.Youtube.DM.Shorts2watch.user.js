@@ -2,7 +2,7 @@
 // @name               ACT.Youtube.DM.Shorts2watch
 // @description        Back to watch page from shorts feeds by one-click button, open shorts on the watch page in channel videos.
 // @author             ACTCD
-// @version            20220325.1
+// @version            20220326.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -54,7 +54,7 @@
 
     new MutationObserver(mutationList => {
         // Hide shorts icon
-        document.querySelectorAll('ytd-grid-video-renderer[is-shorts] [overlay-style="SHORTS"]').forEach(e => e.style.setProperty('display', 'none'));
+        document.querySelectorAll('ytd-grid-video-renderer [overlay-style="SHORTS"]').forEach(e => e.style.setProperty('display', 'none'));
         document.querySelectorAll('ytm-compact-video-renderer [data-style="SHORTS"]').forEach(e => e.style.setProperty('display', 'none'));
         // Dynamic button
         if (location.pathname.slice(0, 8) == '/shorts/') {
