@@ -2,7 +2,7 @@
 // @name               ACT.Google.MO.Stay
 // @description        Stay in web not app, Google Widget and APP Banner Remove.
 // @author             ACTCD
-// @version            20220324.1
+// @version            20220326.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -19,46 +19,22 @@
     'use strict';
 
     function cleaner() {
-        // Bottom Widget Banner
-        document.querySelectorAll("button").forEach(e => {
-            if (e.innerHTML == "Get the app" || e.innerHTML == "获取该应用") {
-                // console.info('GOTCHA: ', e); // DEBUG
-                let p = e.parentElement;
-                let s = 0;
-                while (s < 10) {
-                    s++; if (!p) break;
-                    if (p.parentElement.tagName == "BODY") break;
-                    p = p.parentElement;
-                }
-                if (p.tagName == "DIV" && p.className != "main" && p.hasAttribute("style")) {
-                    console.info('REMOVE: ', p);
-                    p.remove();
-                }
-            }
-        });
-        // Bottom App Banner
+        const careful_remove = e => !e || e.className == "main" || e.id == "gb-main" || e.remove() || console.info('REMOVE:', e);
+        // Index - Bottom App Banner
+        careful_remove(document.querySelector('mobile-promo')?.closest('body>div'));
         document.querySelectorAll("g-raised-button").forEach(e => {
-            if (e.innerHTML.includes("Try it") || e.innerHTML.includes("试用")) {
-                // console.info('GOTCHA: ', e); // DEBUG
-                let p = e.parentElement;
-                let s = 0;
-                while (s < 10) {
-                    s++; if (!p) break;
-                    if (p.parentElement.tagName == "BODY") break;
-                    p = p.parentElement;
-                }
-                if (p.tagName == "DIV" && p.className != "main" && p.id != "gb-main" && p.hasAttribute('style')) {
-                    console.info('REMOVE: ', p);
-                    p.remove();
-                }
+            if (e.textContent.includes("Try it") || e.textContent.includes("试用")) {
+                // console.info('GOTCHA:', e); // DEBUG
+                careful_remove(e.closest('body>div[style]'));
             }
         });
-        // Bottom App Banner
-        let b = document.querySelector('mobile-promo');
-        if (b) {
-            console.info('REMOVE: ', b);
-            b.remove();
-        }
+        // Search - Bottom Widget Banner
+        document.querySelectorAll("button").forEach(e => {
+            if (e.textContent == "Get the app" || e.textContent == "获取该应用") {
+                // console.info('GOTCHA:', e); // DEBUG
+                careful_remove(e.closest('body>div[id][style]'));
+            }
+        });
     }
 
     new MutationObserver(cleaner).observe(document, { subtree: true, childList: true });
