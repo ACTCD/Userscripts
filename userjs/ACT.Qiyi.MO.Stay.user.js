@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name               ACT.Qiyi.DM.Stay
+// @name               ACT.Qiyi.MO.Stay
 // @description        Stay in web not app, browsing experience optimization.
 // @author             ACTCD
 // @version            20220325.1
@@ -7,8 +7,8 @@
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
 // @homepageURL        https://github.com/ACTCD/Userscripts
-// @updateURL          https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Qiyi.DM.Stay.user.js
-// @downloadURL        https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Qiyi.DM.Stay.user.js
+// @updateURL          https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Qiyi.MO.Stay.user.js
+// @downloadURL        https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Qiyi.MO.Stay.user.js
 // @match              *://*.iqiyi.com/*
 // @grant              none
 // @run-at             document-start
