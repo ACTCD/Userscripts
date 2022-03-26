@@ -4,7 +4,7 @@
 // @description        Add a PiP button to the player to easy enter Picture-in-Picture mode.
 // @description:zh-CN  为播放器添加画中画按钮，轻松进入画中画模式。
 // @author             ACTCD
-// @version            20220326.1
+// @version            20220326.2
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
