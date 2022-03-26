@@ -1,8 +1,10 @@
 // ==UserScript==
 // @name               ACT.Jianshu.MO.Stay
+// @name:zh-CN         ACT.简书.MO.Stay
 // @description        Stay in web not app, browsing experience optimization.
+// @description:zh-CN  留在网络而非应用，网站浏览体验优化。
 // @author             ACTCD
-// @version            20220325.1
+// @version            20220326.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
