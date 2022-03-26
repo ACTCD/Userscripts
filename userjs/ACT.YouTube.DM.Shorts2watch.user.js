@@ -1,14 +1,16 @@
 // ==UserScript==
-// @name               ACT.Youtube.DM.Shorts2watch
+// @name               ACT.YouTube.DM.Shorts2watch
+// @name:zh-CN         ACT.YouTube.DM.短视频返回观看页
 // @description        Back to watch page from shorts feeds by one-click button, open shorts on the watch page in channel videos.
+// @description:zh-CN  一键从短视频饲养返回传统观看页面，在频道视频列表中以传统观看页面打开短视频。
 // @author             ACTCD
 // @version            20220326.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
 // @homepageURL        https://github.com/ACTCD/Userscripts
-// @updateURL          https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Youtube.DM.Shorts2watch.user.js
-// @downloadURL        https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Youtube.DM.Shorts2watch.user.js
+// @updateURL          https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.YouTube.DM.Shorts2watch.user.js
+// @downloadURL        https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.YouTube.DM.Shorts2watch.user.js
 // @match              *://*.youtube.com/*
 // @grant              none
 // @run-at             document-start
