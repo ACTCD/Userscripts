@@ -1,8 +1,10 @@
 // ==UserScript==
 // @name               ACT.Google.MO.Auto-Seemore
+// @name:zh-CN         ACT.谷歌.MO.自动查看更多
 // @description        Mobile google search See more automatically.
+// @description:zh-CN  移动网站谷歌搜索自动查看更多。
 // @author             ACTCD
-// @version            20220324.1
+// @version            20220326.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
