@@ -1,8 +1,10 @@
 // ==UserScript==
 // @name               ACT.Google.MO.Stay
+// @name:zh-CN         ACT.谷歌.MO.Stay
 // @description        Stay in web not app, Google Widget and APP Banner Remove.
+// @description:zh-CN  留在网络而非应用，移除谷歌微件和APP推广横幅。
 // @author             ACTCD
-// @version            20220326.1
+// @version            20220326.2
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
