@@ -4,7 +4,7 @@
 // @description        Automatically translate any non-specified language Subtitles/CC.
 // @description:zh-CN  自动翻译任何非指定语言字幕。
 // @author             ACTCD
-// @version            20220326.1
+// @version            20220326.2
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
