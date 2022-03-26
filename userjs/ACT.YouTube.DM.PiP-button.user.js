@@ -1,14 +1,16 @@
 // ==UserScript==
-// @name               ACT.Youtube.DM.PiP-button
+// @name               ACT.YouTube.DM.PiP-button
+// @name:zh-CN         ACT.YouTube.DM.画中画按钮
 // @description        Add a PiP button to the player to easy enter Picture-in-Picture mode.
+// @description:zh-CN  为播放器添加画中画按钮，轻松进入画中画模式。
 // @author             ACTCD
-// @version            20220325.1
+// @version            20220326.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
 // @homepageURL        https://github.com/ACTCD/Userscripts
-// @updateURL          https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Youtube.DM.PiP-button.user.js
-// @downloadURL        https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Youtube.DM.PiP-button.user.js
+// @updateURL          https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.YouTube.DM.PiP-button.user.js
+// @downloadURL        https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.YouTube.DM.PiP-button.user.js
 // @match              *://*.youtube.com/*
 // @grant              none
 // @run-at             document-start
