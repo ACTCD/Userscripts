@@ -4,7 +4,7 @@
 // @description        Add a PiP button to the player to easy enter Picture-in-Picture mode.
 // @description:zh-CN  为播放器添加画中画按钮，轻松进入画中画模式。
 // @author             ACTCD
-// @version            20220326.2
+// @version            20220327.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -18,6 +18,11 @@
 
 (function () {
     'use strict';
+
+    if (!document.pictureInPictureEnabled) {
+        console.log('Your browser cannot use picture-in-picture right now');
+        return;
+    }
 
     // Create PiP Button
     const i1 = 'url("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2221%22%20height%3D%2225%22%3E%3Ctitle%3Epip_reduced%401x%3C%2Ftitle%3E%3Crect%20width%3D%2221%22%20height%3D%2225%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M2.5%2C17A1.5%2C1.5%2C0%2C0%2C1%2C1%2C15.5v-9A1.5%2C1.5%2C0%2C0%2C1%2C2.5%2C5h13A1.5%2C1.5%2C0%2C0%2C1%2C17%2C6.5V10h1V6.5A2.5%2C2.5%2C0%2C0%2C0%2C15.5%2C4H2.5A2.5%2C2.5%2C0%2C0%2C0%2C0%2C6.5v9A2.5%2C2.5%2C0%2C0%2C0%2C2.5%2C18H7V17Z%22%20fill%3D%22%23fff%22%2F%3E%3Cpath%20d%3D%22M18.5%2C11h-8A2.5%2C2.5%2C0%2C0%2C0%2C8%2C13.5v5A2.5%2C2.5%2C0%2C0%2C0%2C10.5%2C21h8A2.5%2C2.5%2C0%2C0%2C0%2C21%2C18.5v-5A2.5%2C2.5%2C0%2C0%2C0%2C18.5%2C11Z%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E")';
@@ -37,20 +42,15 @@
     pip_button.style.setProperty("background-image", i1);
     const onEnterPip = e => pip_button.style.setProperty("background-image", i2);
     const onExitPip = e => pip_button.style.setProperty("background-image", i1);
-    if (document.pictureInPictureEnabled) {
-        pip_button.addEventListener("click", event => {
-            if (document.pictureInPictureElement) {
-                document.exitPictureInPicture();
-            } else {
-                document.querySelector("video[src]")?.requestPictureInPicture();
-            }
-            event.preventDefault();
-            event.stopImmediatePropagation();
-        });
-    } else {
-        pip_button.style.setProperty("opacity", "0.5");
-        console.log('Your browser cannot use picture-in-picture right now');
-    }
+    pip_button.addEventListener("click", event => {
+        if (document.pictureInPictureElement) {
+            document.exitPictureInPicture();
+        } else {
+            document.querySelector("video[src]")?.requestPictureInPicture();
+        }
+        event.preventDefault();
+        event.stopImmediatePropagation();
+    });
 
     // Insert PiP Button (desktop) // Fixed once for unreliable @run-at document-start
     document.querySelector(".ytp-miniplayer-button")?.before(pip_button);
