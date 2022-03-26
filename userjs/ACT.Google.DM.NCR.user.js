@@ -1,8 +1,10 @@
 // ==UserScript==
 // @name               ACT.Google.DM.NCR
+// @name:zh-CN         ACT.谷歌.MO.NCR
 // @description        Google Search Redirect to .com domian.
+// @description:zh-CN  谷歌搜索重定向到 .com 域。
 // @author             ACTCD
-// @version            20220324.1
+// @version            20220326.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
