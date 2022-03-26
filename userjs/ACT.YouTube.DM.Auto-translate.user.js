@@ -4,7 +4,7 @@
 // @description        Automatically translate any non-specified language Subtitles/CC.
 // @description:zh-CN  自动翻译任何非指定语言字幕。
 // @author             ACTCD
-// @version            20220327.1
+// @version            20220327.2
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -49,6 +49,13 @@
 
     const script = document.createElement("script");
     script.textContent = '(' + inline_script + ')();';
-    document.head.appendChild(script);
+
+    if (document.head) {
+        document.head.appendChild(script);
+    } else {
+        new MutationObserver((mutationList, observer) => {
+            document.head && observer.disconnect() || document.head.append(script);
+        }).observe(document, { subtree: true, childList: true });
+    }
 
 })();
