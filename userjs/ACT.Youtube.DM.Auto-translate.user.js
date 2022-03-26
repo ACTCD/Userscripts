@@ -1,8 +1,10 @@
 // ==UserScript==
-// @name               ACT.Youtube.DM.Auto-translate
+// @name               ACT.YouTube.DM.Auto-translate
+// @name:zh-CN         ACT.YouTube.DM.自动翻译
 // @description        Automatically translate any non-specified language Subtitles/CC.
+// @description:zh-CN  自动翻译任何非指定语言字幕。
 // @author             ACTCD
-// @version            20220323.1
+// @version            20220326.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -19,7 +21,7 @@
     'use strict';
 
     const inline_script = () => {
-        const tlang = 'zh-CN'; // Specified language
+        const tlang = 'zh-CN'; // Specified language // 指定语言
         const cache = { req_url: null, obj_url: null };
         const XMLHttpRequest_open = XMLHttpRequest.prototype.open;
         XMLHttpRequest.prototype.open = function () {
