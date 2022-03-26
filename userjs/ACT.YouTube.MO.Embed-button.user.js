@@ -1,14 +1,16 @@
 // ==UserScript==
-// @name               ACT.Youtube.MO.Embed-button
-// @description        Go to Embed page to uses auto-translate on in-page fullscreen player, for mobile users.
+// @name               ACT.YouTube.MO.Embed-button
+// @name:zh-CN         ACT.YouTube.MO.转到嵌入页按钮
+// @description        Go to Embed page to uses Subtitles/CC auto-translate menu on in-page fullscreen player, for mobile users.
+// @description:zh-CN  一键转到嵌入式页面以在页面内全屏播放器上使用字幕自动翻译菜单，供移动用户使用。
 // @author             ACTCD
-// @version            20220323.1
+// @version            20220326.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
 // @homepageURL        https://github.com/ACTCD/Userscripts
-// @updateURL          https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Youtube.MO.Embed-button.user.js
-// @downloadURL        https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Youtube.MO.Embed-button.user.js
+// @updateURL          https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.YouTube.MO.Embed-button.user.js
+// @downloadURL        https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.YouTube.MO.Embed-button.user.js
 // @match              *://m.youtube.com/*
 // @match              *://www.youtube-nocookie.com/embed/*
 // @grant              none
@@ -49,7 +51,11 @@
 
     function tweak() {
         insert_button()
-        document.querySelector('.ytp-fullscreen-button')?.remove();
+        document.querySelector('.ytp-fullscreen-button')?.remove(); return;
+        document.querySelector('.ytp-fullscreen-button')?.addEventListener('click', event => {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+        }, true);
     }
 
     new MutationObserver(tweak).observe(document, { subtree: true, childList: true });
