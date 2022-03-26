@@ -4,7 +4,7 @@
 // @description        Go to Embed page to uses Subtitles/CC auto-translate menu on in-page fullscreen player, for mobile users.
 // @description:zh-CN  一键转到嵌入式页面以在页面内全屏播放器上使用字幕自动翻译菜单，供移动用户使用。
 // @author             ACTCD
-// @version            20220326.1
+// @version            20220326.2
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -51,11 +51,7 @@
 
     function tweak() {
         insert_button()
-        document.querySelector('.ytp-fullscreen-button')?.remove(); return;
-        document.querySelector('.ytp-fullscreen-button')?.addEventListener('click', event => {
-            event.preventDefault();
-            event.stopImmediatePropagation();
-        }, true);
+        document.querySelector('.ytp-fullscreen-button')?.remove();
     }
 
     new MutationObserver(tweak).observe(document, { subtree: true, childList: true });
