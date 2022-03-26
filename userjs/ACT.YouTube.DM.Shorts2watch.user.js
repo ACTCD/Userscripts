@@ -4,7 +4,7 @@
 // @description        Back to watch page from shorts feeds by one-click button, open shorts on the watch page in channel videos.
 // @description:zh-CN  一键从短视频饲养返回传统观看页面，在频道视频列表中以传统观看页面打开短视频。
 // @author             ACTCD
-// @version            20220326.1
+// @version            20220326.2
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
