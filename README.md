@@ -1,15 +1,17 @@
 # Userscripts
 Committed to creating desktop and mobile user scripts to improve your browser browsing experience.
 
-Script naming specification:
+致力于创造桌面端和移动端用户脚本，改善在浏览器环境中网站浏览体验。
 
-[Prefix].[Website].[Platform].[Action].user.js
+Script naming specification: / 脚本命名规范：
+
+[Prefix].[Website].[Platform].[Action].user.js / [前缀].[网站].[平台].[作用].user.js
 - [Prefix] = ACT
 - [Website] = Website name
-- [Platform] = DM/DO/MO (D=Desktop,M=Mobile,O=Only)
+- [Platform] = DM/DO/MO (D=Desktop,M=Mobile,O=Only)（D=桌面，M=移动，O=只有）
 - [Action] = Main features
 
-## Contact
+## Contact / 联络
 
 - **Matrix Channel**
 
@@ -27,11 +29,11 @@ Script naming specification:
 
     https://t.me/ACTDC
 
-## Mirror Repositories
+## Mirror Repositories / 镜像仓库
 - [Greasy Fork](https://greasyfork.org/zh-CN/users/885672-actcd)
 - [OpenUserJS](https://openuserjs.org/users/ACTCD)
 
-## Userscripts Manager (FOSS)
+## Userscripts Manager (FOSS) / 脚本管理器（免费开源软件）
 
 ### Safari
 
