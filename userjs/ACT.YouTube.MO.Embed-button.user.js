@@ -2,9 +2,9 @@
 // @name               ACT.YouTube.MO.Embed-button
 // @name:zh-CN         ACT.YouTube.MO.转到嵌入页按钮
 // @description        Go to Embed page to uses Subtitles/CC auto-translate menu on in-page fullscreen player, for mobile users.
-// @description:zh-CN  一键转到嵌入式页面以在页面内全屏播放器上使用字幕自动翻译菜单，供移动用户使用。
+// @description:zh-CN  一键转到嵌入式页面以在页面内全屏播放器上使用字幕自动翻译菜单，供手机用户使用。
 // @author             ACTCD
-// @version            20220326.2
+// @version            20220327.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -66,7 +66,7 @@
     function WindowLoaded() {
         console.log('WindowLoaded');
         tweak();
-        if (location.pathname.startsWith('/embed/')) web_app();
+        location.pathname.startsWith('/embed/') && web_app();
     }
 
     if (document.readyState === 'complete') {
