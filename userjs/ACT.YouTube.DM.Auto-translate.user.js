@@ -36,7 +36,7 @@
                         URL.revokeObjectURL(cache.obj_url);
                         this.addEventListener('load', event => {
                             cache.req_url = req_url;
-                            cache.obj_url = URL.createObjectURL(new Blob([this.responseText]));
+                            cache.obj_url = URL.createObjectURL(new Blob([this.responseText], { type: 'application/json' }));
                         });
                         url.searchParams.set('tlang', tlang);
                         arguments[1] = url.href;
