@@ -4,7 +4,7 @@
 // @description        Add a PiP button to the player to easy enter Picture-in-Picture mode.
 // @description:zh-CN  为播放器添加画中画按钮，轻松进入画中画模式。
 // @author             ACTCD
-// @version            20220330.2
+// @version            20220330.3
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -85,15 +85,25 @@
                     if (node.nodeType != Node.ELEMENT_NODE) return;
                     node.nodeName == 'VIDEO' && pip_init(node);
                     node.classList.contains("ytp-miniplayer-button") && node.before(pip_button); // Insert PiP Button (desktop)
-                })
+                });
+                mutation.removedNodes.forEach(node => {
+                    if (node.nodeType != Node.ELEMENT_NODE) return;
+                    node.classList.contains("ytp-miniplayer-button") && pip_button.remove();
+                    node.id == "player-control-overlay" && pip_button.remove();
+                });
             }
             if (mutation.type == 'attributes') {
                 mutation.target.nodeName == 'VIDEO' && mutation.attributeName == 'src' && pip_init(mutation.target);
                 if (mutation.target.id == "player-control-overlay" && mutation.attributeName == 'class') { // Insert PiP Button (mobile)
-                    mutation.target.classList.contains("fadein") ? document.querySelector('#player-container-id')?.append(pip_button) : pip_button.remove();
+                    mutation.target.classList.contains("fadein") ? document.querySelector('#player')?.append(pip_button) : pip_button.remove();
                 }
                 if (mutation.attributeName == 'class' && mutation.target == document.querySelector('.player-controls-top')?.parentNode) {
-                    !mutation.target.classList.contains('player-controls-hide') ? document.querySelector('#player-container-id')?.append(pip_button) : pip_button.remove();
+                    !mutation.target.classList.contains('player-controls-hide') ? (
+                        document.querySelector('#player-control-overlay')?.classList.contains("fadein") && document.querySelector('#player')?.append(pip_button)
+                    ) : pip_button.remove();
+                }
+                if (mutation.target.id == "player" && mutation.attributeName == 'hidden') {
+                    mutation.target.hasAttribute('hidden') && pip_button.remove() || document.exitPictureInPicture();
                 }
             }
         });
