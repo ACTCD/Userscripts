@@ -4,7 +4,7 @@
 // @description        Add a PiP button to the player to easy enter Picture-in-Picture mode.
 // @description:zh-CN  为播放器添加画中画按钮，轻松进入画中画模式。
 // @author             ACTCD
-// @version            20220330.1
+// @version            20220330.2
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -90,7 +90,10 @@
             if (mutation.type == 'attributes') {
                 mutation.target.nodeName == 'VIDEO' && mutation.attributeName == 'src' && pip_init(mutation.target);
                 if (mutation.target.id == "player-control-overlay" && mutation.attributeName == 'class') { // Insert PiP Button (mobile)
-                    mutation.target.classList.contains("fadein") ? document.querySelector('#player-container-id').append(pip_button) : pip_button.remove();
+                    mutation.target.classList.contains("fadein") ? document.querySelector('#player-container-id')?.append(pip_button) : pip_button.remove();
+                }
+                if (mutation.attributeName == 'class' && mutation.target == document.querySelector('.player-controls-top')?.parentNode) {
+                    !mutation.target.classList.contains('player-controls-hide') ? document.querySelector('#player-container-id')?.append(pip_button) : pip_button.remove();
                 }
             }
         });
