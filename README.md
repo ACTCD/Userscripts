@@ -31,7 +31,7 @@ Script naming specification: / 脚本命名规范：
 
 ## Mirror Repositories / 镜像仓库
 - [Greasy Fork](https://greasyfork.org/zh-CN/users/885672-actcd)
-- [OpenUserJS](https://openuserjs.org/users/ACTCD)
+- ~~[OpenUserJS](https://openuserjs.org/users/ACTCD)~~ (Unable to synchronize, because the [issues](https://github.com/OpenUserJS/OpenUserJS.org/pull/1840))
 
 ## Userscripts Manager (FOSS) / 脚本管理器（免费开源软件）
 
