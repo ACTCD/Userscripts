@@ -37,7 +37,7 @@ Script naming specification: / 脚本命名规范：
 
 ### Safari
 
-- **Stay (iOS) (iPadOS/macOS is compatible, not adapted yet)**
+- **Stay (iOS/iPadOS) (macOS is compatible with Apple Silicon)**
 
     [GitHub](https://github.com/shenruisi/Stay) | [Apple App Store](https://geo.itunes.apple.com/app/stay/id1591620171)
 
