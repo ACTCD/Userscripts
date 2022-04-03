@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name               ACT.Google.DM.NCR-Force
+// @name               ACT.Google.DM.NCR.SHIFT
 // @author             ACTCD
 // @version            20220401.1
 // @license            GPL-3.0-or-later
