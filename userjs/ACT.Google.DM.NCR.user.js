@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name               ACT.Google.DM.NCR
-// @name:zh-CN         ACT.谷歌.MO.NCR
-// @description        Google Search Redirect to .com domian.
-// @description:zh-CN  谷歌搜索重定向到 .com 域。
+// @name:zh-CN         ACT.谷歌.DM.NCR
+// @description        Google region locked, no country redirect.
+// @description:zh-CN  谷歌地区锁定，没有国家重定向。
 // @author             ACTCD
-// @version            20220326.1
+// @version            20220403.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -204,18 +204,29 @@
 // @grant              none
 // @run-at             document-start
 // ==/UserScript==
+// https://www.google.com/supported_domains
 
 (function () {
     'use strict';
 
+    const lang = navigator.language || 'zh-CN';
     const url = new URL(location);
-    if (url.hostname == "www.google.com") return; // Only to display userscript match
-    url.hostname = "www.google.com";
-    url.searchParams.set("gl", "us");
-    url.searchParams.set("hl", "en");
-    url.searchParams.set("pws", "0");
-    url.searchParams.set("gws_rd", "cr");
-    window.stop();
-    location.replace(url.href);
+    url.hostname = 'www.google.com';
+    if (url.hostname != location.hostname) {
+        window.stop();
+        location.replace('https://www.google.com/ncr#ncr:' + encodeURIComponent(url));
+    } else {
+        if (url.hash.slice(0, 5) == '#ncr:') {
+            url.href = decodeURIComponent(url.hash.slice(5));
+            url.hash = location.hash = '';
+            url.searchParams.set("gl", 'ZZ');
+        }
+        if (url.searchParams.get("gl") != lang.slice(-2)) {
+            url.searchParams.set("gl", lang.slice(-2));
+            url.searchParams.set("hl", lang);
+            window.stop();
+            location.replace(url.href);
+        }
+    }
 
 })();
