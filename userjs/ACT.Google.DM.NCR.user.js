@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name               ACT.Google.DM.NCR
 // @name:zh-CN         ACT.谷歌.DM.NCR
-// @description        Google region locked, no country redirect.
-// @description:zh-CN  谷歌地区锁定，没有国家重定向。
+// @description        No country redirect, easy to switch region/language.
+// @description:zh-CN  没有国家重定向，轻松切换地区/语言。
 // @author             ACTCD
-// @version            20220403.2
+// @version            20220405.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -209,6 +209,7 @@
 (function () {
     'use strict';
 
+    if (location.pathname == '/url') return;
     const lang = navigator.language || 'zh-CN';
     const url = new URL(location);
     url.hostname = 'www.google.com';
@@ -220,13 +221,107 @@
     if (url.hash.slice(0, 5) == '#ncr:') {
         url.href = decodeURIComponent(url.hash.slice(5));
         url.hash = location.hash = '';
-        url.searchParams.set("gl", 'ZZ');
+        url.searchParams.set("gl", 'ncr');
     }
-    if (url.searchParams.get("gl") != lang.slice(-2)) {
+    if (url.searchParams.get("gl") == 'ncr' || !url.searchParams.get("gl") && !url.searchParams.get("hl")) {
         url.searchParams.set("gl", lang.slice(-2));
         url.searchParams.set("hl", lang);
         window.stop();
         location.replace(url.href);
+        return;
+    }
+
+    const default_lang = 'en_US';
+    const default_region = default_lang.slice(-2);
+    const default_langua = default_lang.slice(0, -3);
+    const current_region = lang.slice(-2);
+    const current_langua = lang.slice(0, -3);
+    const langbar = document.createElement('div');
+    const langbar_region = document.createElement('div');
+    const langbar_region_default = document.createElement('span');
+    const langbar_region_current = document.createElement('span');
+    const langbar_langua = document.createElement('div');
+    const langbar_langua_default = document.createElement('span');
+    const langbar_langua_current = document.createElement('span');
+    langbar.className = 'act_langbar';
+    langbar_region.textContent = 'REGION:';
+    langbar_langua.textContent = 'LANGUAGE:';
+    langbar_region_default.textContent = default_region;
+    langbar_region_current.textContent = current_region;
+    langbar_langua_default.textContent = default_langua.toUpperCase();
+    langbar_langua_current.textContent = current_langua.toUpperCase();
+    langbar_region.append(langbar_region_default, langbar_region_current);
+    langbar_langua.append(langbar_langua_default, langbar_langua_current);
+    langbar.append(langbar_region, langbar_langua);
+    switch (url.searchParams.get("gl")) {
+        case current_region: langbar_region_current.className = 'act'; break;
+        case default_region: langbar_region_default.className = 'act'; break;
+    }
+    switch (url.searchParams.get("hl")) {
+        case lang: langbar_langua_current.className = 'act'; break;
+        case default_lang: langbar_langua_default.className = 'act'; break;
+    }
+    langbar_region.addEventListener('click', event => {
+        switch (url.searchParams.get("gl")) {
+            case current_region: url.searchParams.set("gl", default_region); break;
+            default: url.searchParams.set("gl", current_region);
+        }
+        location.replace(url.href);
+    }, true);
+    langbar_langua.addEventListener('click', event => {
+        switch (url.searchParams.get("hl")) {
+            case lang: url.searchParams.set("hl", default_lang); break;
+            default: url.searchParams.set("hl", lang);
+        }
+        location.replace(url.href);
+    }, true);
+    const langbar_style = document.createElement('style');
+    langbar_style.textContent = `
+.act_langbar {
+    line-height: 2;
+    margin-left: 180px;
+    margin-bottom: 5px;
+}
+@media (max-width: 1121px) {
+    .act_langbar {
+        margin-left: 28px;
+        margin-bottom: 0px;
+    }
+}
+.act_langbar>div {
+    display: inline-block;
+    padding: 0px 10px;
+    margin-right: 20px;
+    border: 2px solid;
+    border-radius: 20px;
+}
+.act_langbar span {
+    margin-left: 10px;
+}
+.act_langbar span.act {
+    font-weight: bold;
+    padding: 1px 5px;
+    border: 1px solid;
+    border-radius: 20px;
+}
+`;
+
+    function DOMContentLoaded() {
+        document.querySelector('#appbar')?.after(langbar);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', DOMContentLoaded);
+    } else {
+        DOMContentLoaded();
+    }
+
+    if (document.head) {
+        document.head.appendChild(langbar_style);
+    } else {
+        new MutationObserver((mutationList, observer) => {
+            document.head && (observer.disconnect() || document.head.append(langbar_style));
+        }).observe(document, { subtree: true, childList: true });
     }
 
 })();
