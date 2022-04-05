@@ -2,9 +2,9 @@
 // @name               ACT.Google.DM.NCR
 // @name:zh-CN         ACT.谷歌.DM.NCR
 // @description        No country redirect, easy to switch region/language.
-// @description:zh-CN  没有国家重定向，轻松切换地区/语言。
+// @description:zh-CN  没有国家重定向，轻松切换区域/语言。
 // @author             ACTCD
-// @version            20220405.3
+// @version            20220406.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -231,6 +231,7 @@
         return;
     }
 
+    const is_zh = url.searchParams.get("hl") == 'zh-CN';
     const default_lang = 'en_US';
     const default_region = default_lang.slice(-2);
     const default_langua = default_lang.slice(0, -3);
@@ -243,9 +244,9 @@
     const langbar_langua = document.createElement('div');
     const langbar_langua_default = document.createElement('span');
     const langbar_langua_current = document.createElement('span');
-    langbar.className = 'act_langbar';
-    langbar_region.textContent = 'REGION:';
-    langbar_langua.textContent = 'LANGUAGE:';
+    langbar.className = 'act_langbar mnr-c';
+    langbar_region.textContent = is_zh ? '区域:' : 'REGION:';
+    langbar_langua.textContent = is_zh ? '语言:' : 'LANGUAGE:';
     langbar_region_default.textContent = default_region;
     langbar_region_current.textContent = current_region;
     langbar_langua_default.textContent = default_langua.toUpperCase();
@@ -279,21 +280,22 @@
     langbar_style.textContent = `
 .act_langbar {
     line-height: 2;
-    margin-left: 180px;
-    margin-bottom: 5px;
+    margin-left: calc(var(--center-column-margin, 16px) - 10px);
+    margin-bottom: 6px;
     user-select: none;
     -webkit-user-select: none;
 }
-@media (max-width: 1121px) {
+@media (max-width: 760px) and (hover: none) {
     .act_langbar {
-        margin-left: 28px;
-        margin-bottom: 0px;
+        padding: 5px;
+        text-align: center;
     }
 }
 .act_langbar>div {
     display: inline-block;
     padding: 0px 10px;
-    margin-right: 20px;
+    margin-block: 3px;
+    margin-inline: 10px;
     border: 1.5px solid;
     border-radius: 20px;
     cursor: pointer;
@@ -302,7 +304,6 @@
     margin-left: 10px;
 }
 .act_langbar span.act {
-    font-weight: bold;
     padding: 1px 5px;
     border: 1px solid;
     border-radius: 20px;
@@ -311,6 +312,7 @@
 
     function DOMContentLoaded() {
         document.querySelector('#appbar')?.after(langbar);
+        !document.querySelector('#appbar') && navigator.userAgent.includes('iPad') && document.querySelector('#st-card')?.closest('#main>div')?.after(langbar);
     }
 
     if (document.readyState === 'loading') {
