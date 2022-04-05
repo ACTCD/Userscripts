@@ -4,7 +4,7 @@
 // @description        No country redirect, easy to switch region/language.
 // @description:zh-CN  没有国家重定向，轻松切换地区/语言。
 // @author             ACTCD
-// @version            20220405.1
+// @version            20220405.2
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -281,6 +281,9 @@
     line-height: 2;
     margin-left: 180px;
     margin-bottom: 5px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
 }
 @media (max-width: 1121px) {
     .act_langbar {
@@ -292,7 +295,7 @@
     display: inline-block;
     padding: 0px 10px;
     margin-right: 20px;
-    border: 2px solid;
+    border: 1.5px solid;
     border-radius: 20px;
 }
 .act_langbar span {
