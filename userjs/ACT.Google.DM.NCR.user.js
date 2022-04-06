@@ -4,7 +4,7 @@
 // @description        No country redirect, easy to switch region/language.
 // @description:zh-CN  没有国家重定向，轻松切换区域/语言。
 // @author             ACTCD
-// @version            20220406.2
+// @version            20220406.3
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -314,7 +314,7 @@
         document.head.appendChild(langbar_style);
     } else {
         new MutationObserver((mutationList, observer) => {
-            document.head && (observer.disconnect() || document.head.append(langbar_style));
+            document.head && (observer.disconnect(), document.head.append(langbar_style));
         }).observe(document, { subtree: true, childList: true });
     }
 
@@ -322,7 +322,7 @@
         document.querySelector('#appbar')?.after(langbar);
     } else {
         new MutationObserver((mutationList, observer) => {
-            document.querySelector('#appbar') && (observer.disconnect() || document.querySelector('#appbar')?.after(langbar));
+            document.querySelector('#appbar') && (observer.disconnect(), document.querySelector('#appbar')?.after(langbar));
         }).observe(document, { subtree: true, childList: true });
     }
 
