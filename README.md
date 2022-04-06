@@ -33,7 +33,7 @@ Script naming specification: / 脚本命名规范：
 - [Greasy Fork](https://greasyfork.org/zh-CN/users/885672-actcd)
 - ~~[OpenUserJS](https://openuserjs.org/users/ACTCD)~~ (Unable to synchronize, because the [issues](https://github.com/OpenUserJS/OpenUserJS.org/pull/1840))
 
-## Userscripts Manager (FOSS) / 脚本管理器（免费开源软件）
+## Userscripts Manager (FOSS) / 用户脚本管理器（免费开源软件）
 
 ### Safari
 
