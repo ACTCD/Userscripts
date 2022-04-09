@@ -4,7 +4,7 @@
 // @description        Add a PiP button to the player to easy enter Picture-in-Picture mode.
 // @description:zh-CN  为播放器添加画中画按钮，轻松进入画中画模式。
 // @author             ACTCD
-// @version            20220406.1
+// @version            20220409.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -51,10 +51,20 @@
         path.before(use);
     }
     pip_button.addEventListener("click", event => {
-        if (document.pictureInPictureElement) {
-            document.exitPictureInPicture();
+        const video = document.querySelector('video[src]');
+        if (!video) return;
+        if (video.webkitPresentationMode === undefined) {
+            if (document.pictureInPictureElement) {
+                document.exitPictureInPicture();
+            } else {
+                video.requestPictureInPicture();
+            }
         } else {
-            document.querySelector("video[src]")?.requestPictureInPicture();
+            if (video.webkitPresentationMode != 'inline') {
+                video.webkitSetPresentationMode('inline');
+            } else {
+                video.webkitSetPresentationMode('picture-in-picture');
+            }
         }
         event.preventDefault();
         event.stopImmediatePropagation();
@@ -66,14 +76,20 @@
     document.querySelector(".ytp-miniplayer-button")?.before(pip_button);
 
     // Video element initialization
-    const PiP_Fix = e => e.stopPropagation();
-    const onEnterPip = e => pip_button_act(path2);
-    const onExitPip = e => pip_button_act(path1);
+    const enterpictureinpicture = e => pip_button_act(path2);
+    const leavepictureinpicture = e => pip_button_act(path1);
+    const webkitpresentationmodechanged = event => {
+        event.target.webkitPresentationMode == 'picture-in-picture' ? pip_button_act(path2) : pip_button_act(path1);
+        event.stopImmediatePropagation();
+    }
     const pip_init = video => {
         if (!video || video.nodeName != 'VIDEO' || !video.hasAttribute("src")) return;
-        video.addEventListener('webkitpresentationmodechanged', PiP_Fix, true);
-        video.addEventListener("leavepictureinpicture", onExitPip);
-        video.addEventListener('enterpictureinpicture', onEnterPip);
+        if (video.webkitPresentationMode === undefined) {
+            video.addEventListener('enterpictureinpicture', enterpictureinpicture);
+            video.addEventListener("leavepictureinpicture", leavepictureinpicture);
+        } else {
+            video.addEventListener('webkitpresentationmodechanged', webkitpresentationmodechanged, true);
+        }
     }
     pip_init(document.querySelector('video[src]'));
 
