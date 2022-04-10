@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name               ACT.Google.DM.Trackless
-// @name:zh-CN         ACT.谷歌.DM.Trackless
+// @name:zh-CN         ACT.谷歌.DM.直链无跟踪
 // @description        Make links direct and track less.
 // @description:zh-CN  直接的链接，更少的跟踪。
 // @author             ACTCD
-// @version            20220410.1
+// @version            20220411.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -18,8 +18,6 @@
 
 (function () {
     'use strict';
-
-    window.navigator.sendBeacon = () => null;
 
     window.addEventListener('click', event => {
         const anchor = event.target.closest('a');
@@ -52,5 +50,20 @@
     window.addEventListener('mouseup', event => {
         event.stopImmediatePropagation();
     }, true);
+
+    const inline_script = () => {
+        window.navigator.sendBeacon = () => console.log('BAN: Beacon');
+    };
+
+    const script = document.createElement("script");
+    script.textContent = '(' + inline_script + ')();';
+
+    if (document.head) {
+        document.head.appendChild(script);
+    } else {
+        new MutationObserver((mutationList, observer) => {
+            document.head && (observer.disconnect(), document.head.append(script));
+        }).observe(document, { subtree: true, childList: true });
+    }
 
 })();
