@@ -11,7 +11,8 @@ Script naming specification: / 脚本命名规范：
 - [Platform] = DM/DO/MO (D=Desktop,M=Mobile,O=Only)（D=桌面，M=移动，O=只有）
 - [Action] = Main features
 
-## Contact / 联络
+## Communicate / 联络
+### Contact
 
 - **Matrix Channel**
 
