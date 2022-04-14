@@ -4,7 +4,7 @@
 // @description        Stay in web not app, browsing experience optimization.
 // @description:zh-CN  留在网络而非应用，网站浏览体验优化。
 // @author             ACTCD
-// @version            20220326.1
+// @version            20220415.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -22,7 +22,7 @@
     if (location.href == "https://www.zhihu.com/signin?next=%2F") location.replace("https://www.zhihu.com/explore"); // Index Login jump
 
     function cleaner() {
-        // D
+        //=D
         document.querySelector('.Modal-wrapper button.Modal-closeButton')?.click(); // Cover Login banner
         //=D/search
         document.querySelector('.SearchBar-tool input')?.setAttribute('placeholder', ''); // Recommended
@@ -37,6 +37,11 @@
         //=M/question
         document.querySelector('.ContentItem-expandButton')?.click(); // Content collapse
         document.querySelector('.RichContent-actions.is-fixed')?.classList.remove("is-fixed"); // Fix space
+        //=Common
+        document.querySelectorAll('a[href^="https://link.zhihu.com/"]').forEach(e => {
+            const url = new URL(e.href);
+            e.href = url.searchParams.get('target') ?? e.href;
+        });
     }
 
     new MutationObserver(cleaner).observe(document, { subtree: true, childList: true });
@@ -73,13 +78,10 @@
 `;
 
     if (document.head) {
-        document.head.appendChild(style);
+        document.head.append(style);
     } else {
         new MutationObserver((mutationList, observer) => {
-            if (document.head) {
-                observer.disconnect();
-                document.head.appendChild(style);
-            }
+            document.head && (observer.disconnect(), document.head.append(style));
         }).observe(document, { subtree: true, childList: true });
     }
 
