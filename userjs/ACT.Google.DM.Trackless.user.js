@@ -4,7 +4,7 @@
 // @description        Make links direct and track less.
 // @description:zh-CN  直接的链接，更少的跟踪。
 // @author             ACTCD
-// @version            20220411.1
+// @version            20220419.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -22,14 +22,15 @@
     window.addEventListener('click', event => {
         const anchor = event.target.closest('a');
         if (!anchor) return;
+        anchor.removeAttribute('ping');
         const href = anchor.getAttribute('href');
-        if (!href || ['button'].includes(anchor.getAttribute('role'))) return;
+        if (!href || href == '#') return;
+        if (['button'].includes(anchor.getAttribute('role'))) return;
         const url = new URL(href, location);
         if (href.slice(0, 5) == '/url?') {
             const r_url = url.searchParams.get('url');
             r_url && (url.href = anchor.href = r_url);
         }
-        anchor.removeAttribute('ping');
         if (anchor.hasAttribute('target')) {
             window.open(url, anchor.getAttribute('target'), 'noopener,noreferrer');
         } else {
@@ -59,7 +60,7 @@
     script.textContent = '(' + inline_script + ')();';
 
     if (document.head) {
-        document.head.appendChild(script);
+        document.head.append(script);
     } else {
         new MutationObserver((mutationList, observer) => {
             document.head && (observer.disconnect(), document.head.append(script));
