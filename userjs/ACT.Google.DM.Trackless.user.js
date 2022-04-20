@@ -4,7 +4,7 @@
 // @description        Make links direct and track less.
 // @description:zh-CN  直接的链接，更少的跟踪。
 // @author             ACTCD
-// @version            20220419.1
+// @version            20220420.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -23,20 +23,14 @@
         const anchor = event.target.closest('a');
         if (!anchor) return;
         anchor.removeAttribute('ping');
+        anchor.setAttribute('rel', 'noopener noreferrer');
         const href = anchor.getAttribute('href');
         if (!href || href == '#') return;
         if (['button'].includes(anchor.getAttribute('role'))) return;
         const url = new URL(href, location);
         if (href.slice(0, 5) == '/url?') {
-            const r_url = url.searchParams.get('url');
-            r_url && (url.href = anchor.href = r_url);
+            anchor.href = url.searchParams.get('url') || href;
         }
-        if (anchor.hasAttribute('target')) {
-            window.open(url, anchor.getAttribute('target'), 'noopener,noreferrer');
-        } else {
-            location.assign(url);
-        }
-        event.preventDefault();
         event.stopImmediatePropagation();
     }, true);
 
