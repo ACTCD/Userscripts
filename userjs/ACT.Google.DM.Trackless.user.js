@@ -4,7 +4,7 @@
 // @description        Make links direct and track less.
 // @description:zh-CN  直接的链接，更少的跟踪。
 // @author             ACTCD
-// @version            20220420.1
+// @version            20220430.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -34,17 +34,19 @@
         event.stopImmediatePropagation();
     }, true);
 
-    window.addEventListener('contextmenu', event => {
-        event.stopImmediatePropagation();
-    }, true);
+    if (location.pathname == '/search') {
+        window.addEventListener('contextmenu', event => {
+            event.stopImmediatePropagation();
+        }, true);
 
-    window.addEventListener('mousedown', event => {
-        event.stopImmediatePropagation();
-    }, true);
+        window.addEventListener('mousedown', event => {
+            event.stopImmediatePropagation();
+        }, true);
 
-    window.addEventListener('mouseup', event => {
-        event.stopImmediatePropagation();
-    }, true);
+        window.addEventListener('mouseup', event => {
+            event.stopImmediatePropagation();
+        }, true);
+    }
 
     const inline_script = () => {
         window.navigator.sendBeacon = () => console.log('BAN: Beacon');
