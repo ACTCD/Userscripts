@@ -4,7 +4,7 @@
 // @description        No country redirect, easy to switch region/language.
 // @description:zh-CN  没有国家重定向，轻松切换区域/语言。
 // @author             ACTCD
-// @version            20220406.3
+// @version            20220430.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -231,8 +231,8 @@
         return;
     }
 
-    const is_zh = url.searchParams.get("hl") == 'zh-CN';
     const default_lang = 'en_US';
+    if (default_lang == lang) return;
     const default_region = default_lang.slice(-2);
     const default_langua = default_lang.slice(0, -3);
     const current_region = lang.slice(-2);
@@ -245,6 +245,7 @@
     const langbar_langua_default = document.createElement('span');
     const langbar_langua_current = document.createElement('span');
     langbar.className = 'act_langbar mnr-c';
+    const is_zh = url.searchParams.get("hl") == 'zh-CN';
     langbar_region.textContent = is_zh ? '区域:' : 'REGION:';
     langbar_langua.textContent = is_zh ? '语言:' : 'LANGUAGE:';
     langbar_region_default.textContent = default_region;
@@ -253,7 +254,8 @@
     langbar_langua_current.textContent = current_langua.toUpperCase();
     langbar_region.append(langbar_region_default, langbar_region_current);
     langbar_langua.append(langbar_langua_default, langbar_langua_current);
-    langbar.append(langbar_region, langbar_langua);
+    default_region != current_region && langbar.append(langbar_region);
+    default_langua != current_langua && langbar.append(langbar_langua);
     switch (url.searchParams.get("gl")) {
         case current_region: langbar_region_current.className = 'act'; break;
         case default_region: langbar_region_default.className = 'act'; break;
@@ -311,7 +313,7 @@
 `;
 
     if (document.head) {
-        document.head.appendChild(langbar_style);
+        document.head.append(langbar_style);
     } else {
         new MutationObserver((mutationList, observer) => {
             document.head && (observer.disconnect(), document.head.append(langbar_style));
