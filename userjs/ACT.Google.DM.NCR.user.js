@@ -4,7 +4,7 @@
 // @description        No country redirect, easy to switch region/language.
 // @description:zh-CN  没有国家重定向，轻松切换区域/语言。
 // @author             ACTCD
-// @version            20220430.1
+// @version            20220502.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -223,9 +223,10 @@
         url.hash = location.hash = '';
         url.searchParams.set("gl", 'ncr');
     }
-    if (url.searchParams.get("gl") == 'ncr' || !url.searchParams.get("gl") && !url.searchParams.get("hl")) {
+    if (url.searchParams.get("gl") == 'ncr' || url.searchParams.has("client") || !url.searchParams.get("gl") && !url.searchParams.get("hl")) {
         url.searchParams.set("gl", lang.slice(-2));
         url.searchParams.set("hl", lang);
+        url.searchParams.delete("client");
         window.stop();
         location.replace(url.href);
         return;
