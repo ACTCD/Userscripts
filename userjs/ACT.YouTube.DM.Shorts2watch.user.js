@@ -4,7 +4,7 @@
 // @description        Back to watch page from shorts feeds by one-click button, open shorts on the watch page in channel videos.
 // @description:zh-CN  一键从短视频饲养返回传统观看页面，在频道视频列表中以传统观看页面打开短视频。
 // @author             ACTCD
-// @version            20220419.1
+// @version            20220503.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -73,8 +73,7 @@
         }
     }).observe(document, { subtree: true, childList: true, attributes: true });
 
-    window.addEventListener('click', event => {
-        // Shorts in channel video list open on the watch page, not shorts feeds.
+    const event_handle = event => { // Shorts in channel video list open on the watch page, not shorts feeds.
         const selectors_hotzone = [
             'ytd-grid-video-renderer ytd-thumbnail a yt-img-shadow img',
             'ytd-grid-video-renderer ytd-thumbnail a ytd-moving-thumbnail-renderer *',
@@ -96,13 +95,15 @@
             if (anchor) {
                 const href = anchor.getAttribute('href');
                 if (href.slice(0, 8) == '/shorts/') {
-                    location.href = '/watch?v=' + href.slice(8);
-                    event.preventDefault();
+                    anchor.href = '/watch?v=' + href.slice(8);
                     event.stopImmediatePropagation();
                 }
             }
         }
-    }, true);
+    };
+
+    window.addEventListener('click', event_handle, true);
+    window.addEventListener('mousedown', event_handle, true);
 
     if (document.head) {
         document.head.append(style);
