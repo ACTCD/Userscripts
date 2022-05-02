@@ -4,7 +4,7 @@
 // @description        No country redirect, easy to switch region/language.
 // @description:zh-CN  没有国家重定向，轻松切换区域/语言。
 // @author             ACTCD
-// @version            20220502.1
+// @version            20220502.2
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -232,7 +232,7 @@
         return;
     }
 
-    const default_lang = 'en_US';
+    const default_lang = 'en-US';
     if (default_lang == lang) return;
     const default_region = default_lang.slice(-2);
     const default_langua = default_lang.slice(0, -3);
