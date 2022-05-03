@@ -4,7 +4,7 @@
 // @description        No country redirect, easy to switch region/language.
 // @description:zh-CN  没有国家重定向，轻松切换区域/语言。
 // @author             ACTCD
-// @version            20220504.1
+// @version            20220504.2
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -274,6 +274,7 @@
         case lang: langbar_langua_current.className = 'act'; break;
         case default_lang: langbar_langua_default.className = 'act'; break;
     }
+    url = new URL(location);
     langbar_region.addEventListener('click', event => {
         switch (_url.searchParams.get("gl")) {
             case current_region: url.searchParams.set("gl", default_region); break;
