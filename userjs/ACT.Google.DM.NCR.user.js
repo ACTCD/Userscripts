@@ -4,7 +4,7 @@
 // @description        No country redirect, easy to switch region/language.
 // @description:zh-CN  没有国家重定向，轻松切换区域/语言。
 // @author             ACTCD
-// @version            20220505.1
+// @version            20220505.2
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -230,9 +230,7 @@
     current_domian &&= current_domian[0];
     if (current_domian != domain) {
         url.hostname = location.hostname.replace(current_domian, domain);
-        if (url.hostname == 'www.google.com' && ['/', '/search'].includes(location.pathname)) {
-            url.href = 'https://www.google.com/ncr#ncr:' + encodeURIComponent(url);
-        }
+        url.href = 'https://www.google.com/ncr#ncr:' + encodeURIComponent(url);
         window.stop();
         location.replace(url);
         return;
