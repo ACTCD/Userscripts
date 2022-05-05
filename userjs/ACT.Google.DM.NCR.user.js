@@ -4,7 +4,7 @@
 // @description        No country redirect, easy to switch region/language.
 // @description:zh-CN  没有国家重定向，轻松切换区域/语言。
 // @author             ACTCD
-// @version            20220505.2
+// @version            20220506.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -228,18 +228,27 @@
     const domain = 'google.com';
     let current_domian = location.hostname.match(/google\.[^\/]+/);
     current_domian &&= current_domian[0];
-    if (current_domian != domain) {
-        url.hostname = location.hostname.replace(current_domian, domain);
-        url.href = 'https://www.google.com/ncr#ncr:' + encodeURIComponent(url);
-        window.stop();
-        location.replace(url);
-        return;
-    }
-    if (o_url.hash.slice(0, 5) == '#ncr:') {
-        location.hash = '';
-        window.stop();
-        location.replace(decodeURIComponent(o_url.hash.slice(5)));
-        return;
+    if (!navigator.cookieEnabled) {
+        if (plang.toUpperCase() == 'ZH-CN') {
+            alert('[ACT.谷歌.DM.NCR]:\n您设置了“阻止所有 Cookie”，导致 NCR 功能将无法生效。');
+        } else {
+            alert('[ACT.Google.DM.NCR]:\nYou had set "Block All Cookies", resulting the NCR feature will not be active.');
+        }
+    } else {
+        if (current_domian != domain) {
+            url.hostname = location.hostname.replace(current_domian, domain);
+            url.href = 'https://www.google.com/ncr#ncr:' + encodeURIComponent(url);
+            console.log(url.href);
+            window.stop();
+            location.replace(url);
+            return;
+        }
+        if (o_url.hash.slice(0, 5) == '#ncr:') {
+            location.hash = '';
+            window.stop();
+            location.replace(decodeURIComponent(o_url.hash.slice(5)));
+            return;
+        }
     }
 
     const r1 = region;
