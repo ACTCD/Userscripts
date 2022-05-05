@@ -4,7 +4,7 @@
 // @description        No country redirect, easy to switch region/language.
 // @description:zh-CN  没有国家重定向，轻松切换区域/语言。
 // @author             ACTCD
-// @version            20220504.2
+// @version            20220505.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -212,11 +212,18 @@
     'use strict';
 
     if (location.pathname == '/url') return;
-    const lang = navigator.language || 'zh-CN';
-    const _url = new URL(location);
+    const plang = navigator.language; // Preferred language // 首选语言
+    const slang = 'en-US'; // Second language // 第二语言
+    const o_url = new URL(location);
     let url = new URL(location);
-    url.searchParams.set("gl", lang.slice(-2));
-    url.searchParams.set("hl", lang);
+    let region = 'ZZ'; // ZZ = Current Region // ZZ = 当前所在区域
+    if (plang.length == 5 && plang[2] == '-') {
+        region = plang.slice(-2).toUpperCase();
+        url.searchParams.set("gl", region);
+    } else {
+        url.searchParams.delete("gl");
+    }
+    url.searchParams.set("hl", plang);
     url.searchParams.delete("client");
     const domain = 'google.com';
     let current_domian = location.hostname.match(/google\.[^\/]+/);
@@ -230,63 +237,56 @@
         location.replace(url);
         return;
     }
-    if (_url.hash.slice(0, 5) == '#ncr:') {
+    if (o_url.hash.slice(0, 5) == '#ncr:') {
         location.hash = '';
         window.stop();
-        location.replace(decodeURIComponent(_url.hash.slice(5)));
-        return;
-    }
-    if (_url.searchParams.has("client") || !_url.searchParams.get("gl") && !_url.searchParams.get("hl")) {
-        window.stop();
-        location.replace(url);
+        location.replace(decodeURIComponent(o_url.hash.slice(5)));
         return;
     }
 
-    const default_lang = 'en-US';
-    if (default_lang == lang) return;
-    const default_region = default_lang.slice(-2);
-    const default_langua = default_lang.slice(0, -3);
-    const current_region = lang.slice(-2);
-    const current_langua = lang.slice(0, -3);
+    const r1 = region;
+    const r2 = r1 != slang.slice(3, 5) ? slang.slice(3, 5) : 'ZZ';
+    const l1 = plang;
+    const l2 = l1.toUpperCase() != slang.toUpperCase() ? slang : '';
     const langbar = document.createElement('div');
-    const langbar_region = document.createElement('div');
-    const langbar_region_default = document.createElement('span');
-    const langbar_region_current = document.createElement('span');
-    const langbar_langua = document.createElement('div');
-    const langbar_langua_default = document.createElement('span');
-    const langbar_langua_current = document.createElement('span');
+    const langbar_r = document.createElement('div');
+    const langbar_r_r1 = document.createElement('span');
+    const langbar_r_r2 = document.createElement('span');
+    const langbar_l = document.createElement('div');
+    const langbar_l_l1 = document.createElement('span');
+    const langbar_l_l2 = document.createElement('span');
     langbar.className = 'act_langbar mnr-c';
-    langbar_region.textContent = lang == 'zh-CN' ? '区域:' : 'REGION:';
-    langbar_langua.textContent = lang == 'zh-CN' ? '语言:' : 'LANGUAGE:';
-    langbar_region_default.textContent = default_region;
-    langbar_region_current.textContent = current_region;
-    langbar_langua_default.textContent = default_langua.toUpperCase();
-    langbar_langua_current.textContent = current_langua.toUpperCase();
-    langbar_region.append(langbar_region_default, langbar_region_current);
-    langbar_langua.append(langbar_langua_default, langbar_langua_current);
-    default_region != current_region && langbar.append(langbar_region);
-    default_langua != current_langua && langbar.append(langbar_langua);
-    switch (_url.searchParams.get("gl")) {
-        case current_region: langbar_region_current.className = 'act'; break;
-        case default_region: langbar_region_default.className = 'act'; break;
+    langbar_r.textContent = plang.toUpperCase() == 'ZH-CN' ? '区域:' : 'REGION:';
+    langbar_l.textContent = plang.toUpperCase() == 'ZH-CN' ? '语言:' : 'LANGUAGE:';
+    langbar_r_r1.textContent = r1.toUpperCase();
+    langbar_r_r2.textContent = r2.toUpperCase();
+    langbar_l_l1.textContent = l1.toUpperCase();
+    langbar_l_l2.textContent = l2.toUpperCase();
+    langbar_r.append(langbar_r_r1, langbar_r_r2);
+    langbar_l.append(langbar_l_l1); l2 !== '' && langbar_l.append(langbar_l_l2);
+    langbar.append(langbar_r, langbar_l);
+    let gl = r1, hl = plang;
+    switch (o_url.searchParams.get("gl")?.toUpperCase()) {
+        case r1.toUpperCase(): langbar_r_r1.className = 'act'; gl = r2; break;
+        case r2.toUpperCase(): langbar_r_r2.className = 'act'; gl = r1; break;
+        case undefined: r2 == 'ZZ' ? langbar_r_r2.className = 'act' : (langbar_r_r1.className = 'act', gl = r2, langbar_r_r1.textContent = 'ZZ'); break;
+        default: langbar_r_r2.className = 'act'; langbar_r_r2.textContent = 'N/A';
     }
-    switch (_url.searchParams.get("hl")) {
-        case lang: langbar_langua_current.className = 'act'; break;
-        case default_lang: langbar_langua_default.className = 'act'; break;
+    switch (o_url.searchParams.get("hl")?.toUpperCase()) {
+        case plang.toUpperCase(): langbar_l_l1.className = 'act'; hl = slang; break;
+        case slang.toUpperCase(): langbar_l_l2.className = 'act'; hl = plang; break;
+        case undefined: langbar_l_l1.className = 'act'; hl = slang; langbar_l_l1.textContent = plang.toUpperCase(); break;
+        default: langbar_l_l2.className = 'act'; langbar_l_l2.textContent = 'N/A'; langbar_l.append(langbar_l_l2);
     }
+    console.log(o_url.searchParams.get("gl")?.toUpperCase());
     url = new URL(location);
-    langbar_region.addEventListener('click', event => {
-        switch (_url.searchParams.get("gl")) {
-            case current_region: url.searchParams.set("gl", default_region); break;
-            default: url.searchParams.set("gl", current_region);
-        }
+    langbar_r.addEventListener('click', event => {
+        url.searchParams.set("gl", gl);
         location.replace(url);
     }, true);
-    langbar_langua.addEventListener('click', event => {
-        switch (_url.searchParams.get("hl")) {
-            case lang: url.searchParams.set("hl", default_lang); break;
-            default: url.searchParams.set("hl", lang);
-        }
+    langbar_l.addEventListener('click', event => {
+        if (langbar_l_l2.textContent === '') return;
+        url.searchParams.set("hl", hl);
         location.replace(url);
     }, true);
     const langbar_style = document.createElement('style');
