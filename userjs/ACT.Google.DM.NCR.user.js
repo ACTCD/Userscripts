@@ -238,7 +238,6 @@
         if (current_domian != domain) {
             url.hostname = location.hostname.replace(current_domian, domain);
             url.href = 'https://www.google.com/ncr#ncr:' + encodeURIComponent(url);
-            console.log(url.href);
             window.stop();
             location.replace(url);
             return;
