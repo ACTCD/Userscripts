@@ -4,7 +4,7 @@
 // @description        No country redirect, easy to switch region/language.
 // @description:zh-CN  没有国家重定向，轻松切换区域/语言。
 // @author             ACTCD
-// @version            20220506.1
+// @version            20220511.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -214,6 +214,7 @@
     if (location.pathname == '/url') return;
     const plang = navigator.language; // Preferred language // 首选语言
     const slang = 'en-US'; // Second language // 第二语言
+    const is_zh = plang.toUpperCase() == 'ZH-CN';
     const o_url = new URL(location);
     let url = new URL(location);
     let region = 'ZZ'; // ZZ = Current Region // ZZ = 当前所在区域
@@ -228,13 +229,7 @@
     const domain = 'google.com';
     let current_domian = location.hostname.match(/google\.[^\/]+/);
     current_domian &&= current_domian[0];
-    if (!navigator.cookieEnabled) {
-        if (plang.toUpperCase() == 'ZH-CN') {
-            alert('[ACT.谷歌.DM.NCR]:\n您设置了“阻止所有 Cookie”，导致 NCR 功能将无法生效。');
-        } else {
-            alert('[ACT.Google.DM.NCR]:\nYou had set "Block All Cookies", resulting the NCR feature will not be active.');
-        }
-    } else {
+    if (navigator.cookieEnabled) {
         if (current_domian != domain) {
             url.hostname = location.hostname.replace(current_domian, domain);
             url.href = 'https://www.google.com/ncr#ncr:' + encodeURIComponent(url);
@@ -247,6 +242,12 @@
             window.stop();
             location.replace(decodeURIComponent(o_url.hash.slice(5)));
             return;
+        }
+    } else {
+        if (is_zh) {
+            alert('[ACT.谷歌.DM.NCR]:\nCookie 已禁用，NCR 功能将无法生效。请检查浏览器设置。');
+        } else {
+            alert('[ACT.Google.DM.NCR]:\nCookies disabled, the NCR feature will not be active. Please check the browser settings.');
         }
     }
 
@@ -262,8 +263,8 @@
     const langbar_l_l1 = document.createElement('span');
     const langbar_l_l2 = document.createElement('span');
     langbar.className = 'act_langbar mnr-c';
-    langbar_r.textContent = plang.toUpperCase() == 'ZH-CN' ? '区域:' : 'REGION:';
-    langbar_l.textContent = plang.toUpperCase() == 'ZH-CN' ? '语言:' : 'LANGUAGE:';
+    langbar_r.textContent = is_zh ? '区域:' : 'REGION:';
+    langbar_l.textContent = is_zh ? '语言:' : 'LANGUAGE:';
     langbar_r_r1.textContent = r1.toUpperCase();
     langbar_r_r2.textContent = r2.toUpperCase();
     langbar_l_l1.textContent = l1.toUpperCase();
