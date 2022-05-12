@@ -4,7 +4,7 @@
 // @description        No country redirect, easy to switch region/language.
 // @description:zh-CN  没有国家重定向，轻松切换区域/语言。
 // @author             ACTCD
-// @version            20220511.1
+// @version            20220513.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -205,6 +205,7 @@
 // @match              *://*.google.cat/*
 // @grant              none
 // @run-at             document-start
+// @noframes
 // ==/UserScript==
 // https://www.google.com/supported_domains
 
@@ -276,13 +277,11 @@
     switch (o_url.searchParams.get("gl")?.toUpperCase()) {
         case r1.toUpperCase(): langbar_r_r1.className = 'act'; gl = r2; break;
         case r2.toUpperCase(): langbar_r_r2.className = 'act'; gl = r1; break;
-        case undefined: r2 == 'ZZ' ? langbar_r_r2.className = 'act' : (langbar_r_r1.className = 'act', gl = r2, langbar_r_r1.textContent = 'ZZ'); break;
         default: langbar_r_r2.className = 'act'; langbar_r_r2.textContent = 'N/A';
     }
     switch (o_url.searchParams.get("hl")?.toUpperCase()) {
         case plang.toUpperCase(): langbar_l_l1.className = 'act'; hl = slang; break;
         case slang.toUpperCase(): langbar_l_l2.className = 'act'; hl = plang; break;
-        case undefined: langbar_l_l1.className = 'act'; hl = slang; langbar_l_l1.textContent = plang.toUpperCase(); break;
         default: langbar_l_l2.className = 'act'; langbar_l_l2.textContent = 'N/A'; langbar_l.append(langbar_l_l2);
     }
     console.log(o_url.searchParams.get("gl")?.toUpperCase());
