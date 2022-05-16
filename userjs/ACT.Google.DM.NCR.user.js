@@ -303,6 +303,7 @@
     margin-bottom: 6px;
     user-select: none;
     -webkit-user-select: none;
+    color: #70757a;
 }
 @media (max-width: 760px) and (hover: none) {
     .act_langbar {
@@ -315,16 +316,17 @@
     padding: 0px 10px;
     margin-block: 3px;
     margin-inline: 10px;
-    border: 1.5px solid;
+    border: 1.5px solid #d9dce0;
     border-radius: 20px;
     cursor: pointer;
 }
 .act_langbar span {
     margin-left: 10px;
+    color: #53575d;
 }
 .act_langbar span.act {
     padding: 1px 5px;
-    border: 1px solid;
+    border: 1px solid #767676;
     border-radius: 20px;
 }
 `;
