@@ -4,7 +4,7 @@
 // @description        No country redirect, easy to switch region/language.
 // @description:zh-CN  没有国家重定向，轻松切换区域/语言。
 // @author             ACTCD
-// @version            20220513.1
+// @version            20220530.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -212,13 +212,14 @@
 (function () {
     'use strict';
 
+    if (window.top !== window.self) return;
     if (location.pathname == '/url') return;
     const plang = navigator.language; // Preferred language // 首选语言
     const slang = 'en-US'; // Second language // 第二语言
     const is_zh = plang.toUpperCase() == 'ZH-CN';
     const o_url = new URL(location);
     let url = new URL(location);
-    let region = 'ZZ'; // ZZ = Current Region // ZZ = 当前所在区域
+    let region = 'ZZ'; // ZZ = Current Region // ZZ = 当前区域
     if (plang.length == 5 && plang[2] == '-') {
         region = plang.slice(-2).toUpperCase();
         url.searchParams.set("gl", region);
@@ -284,7 +285,6 @@
         case slang.toUpperCase(): langbar_l_l2.className = 'act'; hl = plang; break;
         default: langbar_l_l2.className = 'act'; langbar_l_l2.textContent = 'N/A'; langbar_l.append(langbar_l_l2);
     }
-    console.log(o_url.searchParams.get("gl")?.toUpperCase());
     url = new URL(location);
     langbar_r.addEventListener('click', event => {
         url.searchParams.set("gl", gl);
