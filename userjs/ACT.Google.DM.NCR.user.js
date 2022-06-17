@@ -323,7 +323,7 @@
     langbar_style.textContent = `
 .act_langbar {
     line-height: 2;
-    margin-left: calc(var(--center-column-margin, 16px) - 10px);
+    margin-left: calc(var(--center-abs-margin, 16px) - 10px);
     margin-bottom: 6px;
     user-select: none;
     -webkit-user-select: none;
