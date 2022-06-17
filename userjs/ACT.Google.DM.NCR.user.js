@@ -4,7 +4,7 @@
 // @description        No country redirect, easy to switch region/language.
 // @description:zh-CN  没有国家重定向，轻松切换区域/语言。
 // @author             ACTCD
-// @version            20220604.1
+// @version            20220617.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -260,6 +260,7 @@
     const l1 = plang;
     const l2 = plang.toUpperCase() == slang.toUpperCase() ? 'AUTO' : slang;
     const langbar = document.createElement('div');
+    const langbar_ = document.createElement('div');
     const langbar_r = document.createElement('div');
     const langbar_r_r1 = document.createElement('span');
     const langbar_r_r2 = document.createElement('span');
@@ -268,7 +269,8 @@
     const langbar_l_l2 = document.createElement('span');
     const langbar_s = document.createElement('div');
     const langbar_s_t = document.createElement('span');
-    langbar.className = 'act_langbar mnr-c';
+    langbar.className = 'act_langbar appbar mnr-c';
+    langbar_.className = 'card-section mnr-c';
     langbar_r.textContent = is_zh ? '区域:' : 'REGION:';
     langbar_l.textContent = is_zh ? '语言:' : 'LANGUAGE:';
     langbar_s.textContent = is_zh ? '区域&语言:' : 'R&L:';
@@ -279,7 +281,8 @@
     langbar_r.append(langbar_r_r1, langbar_r_r2);
     langbar_l.append(langbar_l_l1, langbar_l_l2);
     langbar_s.append(langbar_s_t);
-    langbar.append(langbar_r, langbar_l, langbar_s);
+    langbar_.append(langbar_r, langbar_l, langbar_s);
+    langbar.append(langbar_);
     let gl = r1, hl = plang, ss = 0;
     const ogl = o_url.searchParams.get("gl");
     const ohl = o_url.searchParams.get("hl");
@@ -323,26 +326,22 @@
     langbar_style.textContent = `
 .act_langbar {
     line-height: 2;
-    margin-left: calc(var(--center-column-margin, 16px) - 10px);
     margin-bottom: 6px;
     user-select: none;
     -webkit-user-select: none;
-    white-space: nowrap;
-    overflow-x: scroll;
-    scrollbar-width: none;
-}
-.act_langbar::-webkit-scrollbar { display: none; }
-@media (max-width: 760px) and (hover: none) {
-    .act_langbar {
-        padding: 5px;
-        text-align: center;
-    }
 }
 .act_langbar>div {
+    white-space: nowrap;
+    overflow-x: scroll !important;
+    scrollbar-width: none;
+    mask-image: linear-gradient(to left, transparent, red 25px);
+}
+.act_langbar>div::-webkit-scrollbar { display: none; }
+.act_langbar>div>div {
     display: inline-block;
     padding: 0px 10px;
     margin-block: 3px;
-    margin-inline: 10px;
+    margin-inline: 0 15px;
     border: 1.5px solid;
     border-radius: 20px;
     cursor: pointer;
@@ -370,17 +369,8 @@
     } else {
         new MutationObserver((mutationList, observer) => {
             document.querySelector('#appbar') && (observer.disconnect(), document.querySelector('#appbar')?.after(langbar));
+            document.readyState == "complete" && observer.disconnect();
         }).observe(document, { subtree: true, childList: true });
-    }
-
-    function DOMContentLoaded() {
-        navigator.userAgent.includes('iPad') && !document.querySelector('#appbar') && document.querySelector('#st-card')?.closest('#main>div')?.after(langbar);
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', DOMContentLoaded);
-    } else {
-        DOMContentLoaded();
     }
 
 })();
