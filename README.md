@@ -30,19 +30,19 @@ Committed to creating desktop and mobile user scripts to improve your browser br
 
 - [Greasy Fork](https://greasyfork.org/zh-CN/users/885672-actcd)
 
-- ~~[OpenUserJS](https://openuserjs.org/users/ACTCD)~~ (Unable to synchronize, because the [issues](https://github.com/OpenUserJS/OpenUserJS.org/pull/1840))
+- ~~[OpenUserJS](https://openuserjs.org/users/ACTCD/scripts)~~ (Unable to synchronize, because the [issues](https://github.com/OpenUserJS/OpenUserJS.org/pull/1840))
 
 ## Userscripts Manager (FOSS) / 用户脚本管理器（免费开源软件）
 
 ### Safari
 
-- **Stay (iOS/iPadOS) (macOS is compatible with Apple Silicon)**
-
-    [GitHub](https://github.com/shenruisi/Stay) | [Apple App Store](https://geo.itunes.apple.com/app/stay/id1591620171)
-
 - **Userscripts (iOS/iPadOS/macOS)**
 
     [GitHub](https://github.com/quoid/userscripts) | [Apple App Store](https://geo.itunes.apple.com/app/userscripts/id1463298887)
+
+- **Stay (iOS/iPadOS) (macOS coming soon)**
+
+    [GitHub](https://github.com/shenruisi/Stay) | [Apple App Store](https://geo.itunes.apple.com/app/stay/id1591620171)
     
 ### FireFox
 
