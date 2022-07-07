@@ -4,32 +4,19 @@ Committed to creating desktop and mobile user scripts to improve your browser br
 致力于创造桌面端和移动端用户脚本，改善在浏览器环境中网站浏览体验。
 
 ## [Install / 安装](https://github.com/ACTCD/Userscripts/tree/main/userjs#install)
+
 - ### [Source code / 源码](https://github.com/ACTCD/Userscripts/tree/main/userjs)
 - ### [Specification / 规格](https://github.com/ACTCD/Userscripts/tree/main/userjs#specification)
 
-## Communicate / 联络
-### Contact
+## Communicate
+###### Contact
 
-- **Matrix Channel**
+- [Matrix](https://matrix.to/#/#ACTCD:matrix.org)
+- [Telegram](https://t.me/ACTCD)
 
-    https://matrix.to/#/#ACTCD:matrix.org
-
-- **Matrix Group**
-
-    https://matrix.to/#/#ACTDC:matrix.org
-
-- **Telegram Channel**
-
-    https://t.me/ACTCD
-
-- **Telegram Group**
-
-    https://t.me/ACTDC
-
-## Mirror Repositories / 镜像仓库
+## Mirror Repositories
 
 - [Greasy Fork](https://greasyfork.org/zh-CN/users/885672-actcd)
-
 - ~~[OpenUserJS](https://openuserjs.org/users/ACTCD/scripts)~~ (Unable to synchronize, because the [issues](https://github.com/OpenUserJS/OpenUserJS.org/pull/1840))
 
 ## Userscripts Manager (FOSS) / 用户脚本管理器（免费开源软件）
