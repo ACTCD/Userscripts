@@ -27,7 +27,7 @@ Committed to creating desktop and mobile user scripts to improve your browser br
 
     [GitHub](https://github.com/quoid/userscripts) | [Apple App Store](https://geo.itunes.apple.com/app/userscripts/id1463298887)
 
-- **Stay (iOS/iPadOS) (macOS coming soon)**
+- **Stay (iOS/iPadOS/macOS)**
 
     [GitHub](https://github.com/shenruisi/Stay) | [Apple App Store](https://geo.itunes.apple.com/app/stay/id1591620171)
     
