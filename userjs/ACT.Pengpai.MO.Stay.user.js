@@ -4,7 +4,7 @@
 // @description        Stay in web not app, browsing experience optimization.
 // @description:zh-CN  留在网络而非应用，网站浏览体验优化。
 // @author             ACTCD
-// @version            20220326.1
+// @version            20220722.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -13,6 +13,7 @@
 // @downloadURL        https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Pengpai.MO.Stay.user.js
 // @match              *://m.thepaper.cn/*
 // @grant              none
+// @inject-into        content
 // @run-at             document-start
 // ==/UserScript==
 
