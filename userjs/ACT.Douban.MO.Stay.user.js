@@ -4,7 +4,7 @@
 // @description        Stay in web not app, browsing experience optimization.
 // @description:zh-CN  留在网络而非应用，网站浏览体验优化。
 // @author             ACTCD
-// @version            20220326.1
+// @version            20220722.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -13,6 +13,7 @@
 // @downloadURL        https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Douban.MO.Stay.user.js
 // @match              *://*.douban.com/*
 // @grant              none
+// @inject-into        content
 // @run-at             document-start
 // ==/UserScript==
 
@@ -27,7 +28,7 @@
         document.querySelector(".open-in-app-fixed-bottom")?.remove(); // Bottom App banner
         document.body.style.setProperty("padding-bottom", ""); // Bottom Space Fix
         document.querySelectorAll("a[href*='/doubanapp'],a[href*='/to_app']").forEach(e => e.removeAttribute("href")); // APP Jump Links
-        document.querySelectorAll("section").forEach(e => { if (e.querySelector("span")?.innerHTML == "豆瓣榜单") e.remove(); });
+        document.querySelectorAll("section").forEach(e => e.querySelector("span")?.innerHTML == "豆瓣榜单" && e.remove());
         document.querySelectorAll("section h2 a").forEach(e => e.remove()); // 用App看更多
         document.querySelector("a.score-write")?.remove(); // Embed App banner
         document.querySelector(".vendor-go-app")?.remove(); // Embed App banner
