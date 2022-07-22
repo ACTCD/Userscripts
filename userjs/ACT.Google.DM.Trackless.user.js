@@ -4,7 +4,7 @@
 // @description        Make links direct and track less.
 // @description:zh-CN  直接的链接，更少的跟踪。
 // @author             ACTCD
-// @version            20220430.1
+// @version            20220722.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -13,6 +13,7 @@
 // @downloadURL        https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Google.DM.Trackless.user.js
 // @match              *://www.google.com/*
 // @grant              none
+// @inject-into        content
 // @run-at             document-start
 // ==/UserScript==
 
