@@ -4,7 +4,7 @@
 // @description        No country redirect, easy to switch region/language.
 // @description:zh-CN  没有国家重定向，轻松切换区域/语言。
 // @author             ACTCD
-// @version            20220618.2
+// @version            20220722.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -204,6 +204,7 @@
 // @match              *://*.google.co.zw/*
 // @match              *://*.google.cat/*
 // @grant              none
+// @inject-into        content
 // @run-at             document-start
 // @noframes
 // ==/UserScript==
@@ -212,7 +213,7 @@
 (function () {
     'use strict';
 
-    if (window.top !== window.self) return;
+    if (window.top !== window.self) return; // @noframes
     if (location.pathname == '/url') return;
     if (location.pathname.startsWith('/sorry/')) return;
     const plang = navigator.language; // Preferred language // 首选语言
