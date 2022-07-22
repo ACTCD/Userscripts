@@ -4,7 +4,7 @@
 // @description        Mobile google search See more automatically.
 // @description:zh-CN  移动网站谷歌搜索自动查看更多。
 // @author             ACTCD
-// @version            20220507.1
+// @version            20220722.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -13,6 +13,7 @@
 // @downloadURL        https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.Google.MO.Auto-Seemore.user.js
 // @match              https://www.google.com/search*
 // @grant              none
+// @inject-into        content
 // @run-at             document-start
 // ==/UserScript==
 
