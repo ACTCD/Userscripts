@@ -4,7 +4,7 @@
 // @description        Stay in web not app, Google Widget and APP Banner Remove.
 // @description:zh-CN  留在网络而非应用，移除谷歌微件和APP推广横幅。
 // @author             ACTCD
-// @version            20220707.1
+// @version            20220722.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -14,6 +14,7 @@
 // @match              *://*.google.com/*
 // @match              *://*.google.com.hk/*
 // @grant              none
+// @inject-into        content
 // @run-at             document-start
 // ==/UserScript==
 
