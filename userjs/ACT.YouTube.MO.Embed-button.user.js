@@ -4,7 +4,7 @@
 // @description        Go to Embed page to uses Subtitles/CC auto-translate menu on in-page fullscreen player, for mobile users.
 // @description:zh-CN  一键转到嵌入式页面以在页面内全屏播放器上使用字幕自动翻译菜单，供手机用户使用。
 // @author             ACTCD
-// @version            20220419.1
+// @version            20220722.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -14,6 +14,7 @@
 // @match              *://m.youtube.com/*
 // @match              *://www.youtube-nocookie.com/embed/*
 // @grant              none
+// @inject-into        content
 // @run-at             document-start
 // ==/UserScript==
 
@@ -45,7 +46,7 @@
         if (location.hostname != 'm.youtube.com') return;
         if (location.pathname != '/watch') return;
         if (button.parentNode) return;
-        document.querySelector('ytm-home-logo','.mobile-topbar-header-endpoint')?.after(button);
+        document.querySelector('ytm-home-logo', '.mobile-topbar-header-endpoint')?.after(button);
         console.log('insert_button');
     }
 
