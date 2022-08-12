@@ -11,8 +11,7 @@ Committed to creating desktop and mobile user scripts to improve your browser br
 ## Communicate
 ###### Contact
 
-- [Matrix](https://matrix.to/#/#ACTCD:matrix.org)
-- [Telegram](https://t.me/ACTCD)
+- [Issues](https://github.com/ACTCD/Userscripts/issues)
 
 ## Mirror Repositories
 
@@ -26,10 +25,6 @@ Committed to creating desktop and mobile user scripts to improve your browser br
 - **Userscripts (iOS/iPadOS/macOS)**
 
     [GitHub](https://github.com/quoid/userscripts) | [Apple App Store](https://geo.itunes.apple.com/app/userscripts/id1463298887)
-
-- **Stay (iOS/iPadOS/macOS)**
-
-    [GitHub](https://github.com/shenruisi/Stay) | [Apple App Store](https://geo.itunes.apple.com/app/stay/id1591620171)
     
 ### FireFox
 
