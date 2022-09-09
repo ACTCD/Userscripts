@@ -5,6 +5,10 @@
 // @version            20220909.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
+// @supportURL         https://github.com/ACTCD/Userscripts
+// @homepageURL        https://github.com/ACTCD/Userscripts
+// @updateURL          https://github.com/ACTCD/Userscripts/raw/dev/debug/DEBUG.ExchangeDataDemo.user.js
+// @downloadURL        https://github.com/ACTCD/Userscripts/raw/dev/debug/DEBUG.ExchangeDataDemo.user.js
 // @match              *://example.com/*
 // @grant              GM.getValue
 // @inject-into        content
