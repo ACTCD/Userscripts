@@ -9,7 +9,7 @@
 // @homepageURL        https://github.com/ACTCD/Userscripts
 // @updateURL          https://raw.githubusercontent.com/ACTCD/Userscripts/dev/debug/DEBUG.ExchangeDataDemo.user.js
 // @downloadURL        https://raw.githubusercontent.com/ACTCD/Userscripts/dev/debug/DEBUG.ExchangeDataDemo.user.js
-// @match              *://example.com/*
+// @match              *://*.example.com/*
 // @grant              GM.getValue
 // @inject-into        content
 // @run-at             document-start
