@@ -2,13 +2,13 @@
 // @name               DEBUG.ExchangeDataDemo
 // @description        You don't need `unsafeWindow` to exchange data.
 // @author             ACTCD
-// @version            20220909.1
+// @version            20220910.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts
 // @homepageURL        https://github.com/ACTCD/Userscripts
-// @updateURL          https://github.com/ACTCD/Userscripts/raw/dev/debug/DEBUG.ExchangeDataDemo.user.js
-// @downloadURL        https://github.com/ACTCD/Userscripts/raw/dev/debug/DEBUG.ExchangeDataDemo.user.js
+// @updateURL          https://raw.githubusercontent.com/ACTCD/Userscripts/dev/debug/DEBUG.ExchangeDataDemo.user.js
+// @downloadURL        https://raw.githubusercontent.com/ACTCD/Userscripts/dev/debug/DEBUG.ExchangeDataDemo.user.js
 // @match              *://example.com/*
 // @grant              GM.getValue
 // @inject-into        content
@@ -21,7 +21,7 @@
     // Content scripts
     const cen = btoa(Math.random()).slice(3, 9);
     console.log('Custom Event name:', cen);
-    console.log('Content scripts context:', window.browser.extension);
+    console.log('Content scripts context:', window?.browser?.extension);
 
     function handle(detail) {
         // Please check and use the received data carefully.
@@ -43,7 +43,7 @@
     };
     const inline_script = (exchange_data) => { // You cannot use `GM APIs` inside this function
         const cen = exchange_data.cen;
-        console.log('Page scripts context:', window.browser.extension);
+        console.log('Page scripts context:', window?.browser?.extension);
         const sendmsg = data => window.dispatchEvent(new CustomEvent(cen, { detail: { data: data, from: 'Page scripts' } }));
         window.page_data = 1;
         const simulate = () => {
