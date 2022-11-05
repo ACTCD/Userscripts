@@ -4,10 +4,10 @@
 // @description        Add a PiP button to the player to easy enter Picture-in-Picture mode.
 // @description:zh-CN  为播放器添加画中画按钮，轻松进入画中画模式。
 // @author             ACTCD
-// @version            20220722.1
+// @version            20221105.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
-// @supportURL         https://github.com/ACTCD/Userscripts#contact
+// @supportURL         https://github.com/ACTCD/Userscripts
 // @homepageURL        https://github.com/ACTCD/Userscripts
 // @updateURL          https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.YouTube.DM.PiP-button.user.js
 // @downloadURL        https://raw.githubusercontent.com/ACTCD/Userscripts/main/userjs/ACT.YouTube.DM.PiP-button.user.js
@@ -80,8 +80,9 @@
     const enterpictureinpicture = e => pip_button_act(path2);
     const leavepictureinpicture = e => pip_button_act(path1);
     const webkitpresentationmodechanged = event => {
-        event.target.webkitPresentationMode == 'picture-in-picture' ? pip_button_act(path2) : pip_button_act(path1);
-        event.stopImmediatePropagation();
+        event.target.webkitPresentationMode == 'picture-in-picture'
+            ? (pip_button_act(path2), event.stopImmediatePropagation())
+            : pip_button_act(path1);
     }
     const pip_init = video => {
         if (!video || video.nodeName != 'VIDEO' || !video.hasAttribute("src")) return;
