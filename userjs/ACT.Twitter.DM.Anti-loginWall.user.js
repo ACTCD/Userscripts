@@ -4,7 +4,7 @@
 // @description        Anti login wall.
 // @description:zh-CN  去除登录墙限制。
 // @author             ACTCD
-// @version            20221129.1
+// @version            20221129.2
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts
@@ -21,14 +21,24 @@
     'use strict';
 
     function cleaner() {
-        // document.querySelector("[data-testid='app-bar-close']")?.click();
-        document.querySelector("[href='/login']")?.closest("#layers>div")?.style.setProperty("display", "none"); // Bottom login banner
-        document.querySelector("[href='/signup']")?.closest("#layers>div")?.style.setProperty("display", "none"); // Cover login wall
-        document.querySelectorAll("#layers [role=button]").forEach(e => { // Cover login wall
-            if (['login', 'sign up', '登录', '注册'].includes(e.innerText)) {
-                e.closest("#layers>div")?.style.setProperty("display", "none");
+        document.querySelectorAll('#layers>div').forEach(e => {
+            if (e.style.display == 'none') return;
+            if (e.querySelector('[aria-label="关闭"],[aria-label="Close"],[data-testid="app-bar-close"]')) return;
+            if (e.querySelector('[href="/login"]')) {
+                e.style.setProperty('display', 'none');
+                return console.info('Bottom login banner:', e);
             }
-        })
+            if (e.querySelector('[href="/signup"]')) {
+                e.style.setProperty('display', 'none');
+                return console.info('Cover login wall:', e);
+            }
+            for (const b of e.querySelectorAll('[role="button"]')) {
+                if (['Log in', 'Sign up', '登录', '注册'].includes(b.innerText)) {
+                    e.style.setProperty('display', 'none');
+                    return console.info('Cover login wall:', e);
+                }
+            }
+        });
     }
 
     new MutationObserver(cleaner).observe(document, { subtree: true, childList: true });
