@@ -4,7 +4,7 @@
 // @description        Anti login wall.
 // @description:zh-CN  去除登录墙限制。
 // @author             ACTCD
-// @version            20221129.2
+// @version            20221129.3
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts
@@ -23,7 +23,15 @@
     function cleaner() {
         document.querySelectorAll('#layers>div').forEach(e => {
             if (e.style.display == 'none') return;
-            if (e.querySelector('[aria-label="关闭"],[aria-label="Close"],[data-testid="app-bar-close"]')) return;
+            if (e.querySelector('[aria-label="关闭"], [aria-label="Close"], [data-testid="app-bar-close"]')) return;
+            if (e.querySelector('input, [data-testid="TopNavBar"]')) {
+                const b = e.querySelector('[href="/login"]')?.closest('[data-testid="twitter-logged-out-nav"]>div');
+                if (b) {
+                    b.style.setProperty('display', 'none');
+                    console.info('Navbar login banner:', e);
+                }
+                return;
+            }
             if (e.querySelector('[href="/login"]')) {
                 e.style.setProperty('display', 'none');
                 return console.info('Bottom login banner:', e);
@@ -59,6 +67,7 @@ html { overflow-y: scroll !important; } /* Scroll fix */
 #credential_picker_container { display: none !important; } /* Float Google login */
 /* #layers */
 [data-testid='BottomBar'] { display: none !important; } /* Bottom login banner */
+[data-testid="twitter-logged-out-nav"] { height: auto !important; } /* NavBar fix */
 `;
 
     if (document.head) {
