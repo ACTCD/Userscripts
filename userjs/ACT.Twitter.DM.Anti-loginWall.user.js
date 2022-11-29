@@ -4,7 +4,7 @@
 // @description        Anti login wall.
 // @description:zh-CN  去除登录墙限制。
 // @author             ACTCD
-// @version            20221129.4
+// @version            20221129.5
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts
@@ -26,7 +26,7 @@
             if (e.querySelector('[aria-label="关闭"], [aria-label="Close"], [data-testid="app-bar-close"]')) return;
             if (e.querySelector('input, [data-testid="TopNavBar"]')) {
                 const b = e.querySelector('[href="/login"]')?.closest('[data-testid="twitter-logged-out-nav"]>div');
-                if (b?.style.display != 'none') {
+                if (b && b.style.display != 'none') {
                     b.style.setProperty('display', 'none');
                     console.info('Navbar login banner:', e);
                 }
