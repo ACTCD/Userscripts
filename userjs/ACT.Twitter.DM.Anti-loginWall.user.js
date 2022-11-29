@@ -4,7 +4,7 @@
 // @description        Anti login wall.
 // @description:zh-CN  去除登录墙限制。
 // @author             ACTCD
-// @version            20221127.1
+// @version            20221129.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts
@@ -24,6 +24,11 @@
         // document.querySelector("[data-testid='app-bar-close']")?.click();
         document.querySelector("[href='/login']")?.closest("#layers>div")?.style.setProperty("display", "none"); // Bottom login banner
         document.querySelector("[href='/signup']")?.closest("#layers>div")?.style.setProperty("display", "none"); // Cover login wall
+        document.querySelectorAll("#layers [role=button]").forEach(e => { // Cover login wall
+            if (['login', 'sign up', '登录', '注册'].includes(e.innerText)) {
+                e.closest("#layers>div")?.style.setProperty("display", "none");
+            }
+        })
     }
 
     new MutationObserver(cleaner).observe(document, { subtree: true, childList: true });
