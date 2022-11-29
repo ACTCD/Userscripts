@@ -29,6 +29,8 @@ Install userscript / 安装用户脚本
 
 ##### [ACT.Qiyi.MO.Stay.user.js](https://github.com/ACTCD/Userscripts/raw/main/userjs/ACT.Qiyi.MO.Stay.user.js)
 
+##### [ACT.Twitter.DM.Anti-loginWall.user.js](https://github.com/ACTCD/Userscripts/raw/main/userjs/ACT.Twitter.DM.Anti-loginWall.user.js)
+
 ##### [ACT.YouTube.DM.Auto-translate.user.js](https://github.com/ACTCD/Userscripts/raw/main/userjs/ACT.YouTube.DM.Auto-translate.user.js)
 
 ##### [ACT.YouTube.DM.PiP-button.user.js](https://github.com/ACTCD/Userscripts/raw/main/userjs/ACT.YouTube.DM.PiP-button.user.js)
