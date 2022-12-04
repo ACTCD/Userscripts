@@ -9,7 +9,6 @@ Committed to creating desktop and mobile user scripts to improve your browser br
 - ### [Specification / 规格](https://github.com/ACTCD/Userscripts/tree/main/userjs#specification)
 
 ## Communicate
-###### Contact
 
 - [Issues](https://github.com/ACTCD/Userscripts/issues)
 
@@ -18,7 +17,7 @@ Committed to creating desktop and mobile user scripts to improve your browser br
 - [Greasy Fork](https://greasyfork.org/zh-CN/users/885672-actcd)
 - ~~[OpenUserJS](https://openuserjs.org/users/ACTCD/scripts)~~ (Unable to synchronize, because the [issues](https://github.com/OpenUserJS/OpenUserJS.org/pull/1840))
 
-## Userscripts Manager (FOSS) / 用户脚本管理器（免费开源软件）
+## Userscripts Manager (FOSS) / 用户脚本管理器（自由开源软件）
 
 ### Safari
 
