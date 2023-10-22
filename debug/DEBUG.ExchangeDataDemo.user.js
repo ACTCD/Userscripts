@@ -2,7 +2,7 @@
 // @name               DEBUG.ExchangeDataDemo
 // @description        You don't need `unsafeWindow` to exchange data.
 // @author             ACTCD
-// @version            20220910.1
+// @version            20231022.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts
@@ -10,7 +10,7 @@
 // @updateURL          https://raw.githubusercontent.com/ACTCD/Userscripts/dev/debug/DEBUG.ExchangeDataDemo.user.js
 // @downloadURL        https://raw.githubusercontent.com/ACTCD/Userscripts/dev/debug/DEBUG.ExchangeDataDemo.user.js
 // @match              *://*.example.com/*
-// @grant              GM.getValue
+// @grant              GM.listValues
 // @inject-into        content
 // @run-at             document-start
 // ==/UserScript==
@@ -20,15 +20,15 @@
 
     // Content scripts
     const cen = btoa(Math.random()).slice(3, 9);
-    console.log('Custom Event name:', cen);
-    console.log('Content scripts context:', window?.browser?.extension);
+    console.info('Custom Event name:', cen);
+    console.info('Content scripts context:', window?.browser?.runtime);
 
     function handle(detail) {
         // Please check and use the received data carefully.
         // Even if random event names are used, there is still the possibility of malicious tampering.
         const data = detail.data;
         if (typeof (data) !== 'number') return 'error data';
-        GM.getValue(); // You can do whatever processing you want...
+        GM.listValues(); // You can do whatever you want with `GM APIs` here...
         return data + data;
     }
 
@@ -38,12 +38,12 @@
     });
 
     // Page scripts
-    const exchange_data = { // Pass the variables you need to use to the page context (only string values)
+    const exchangeData = { // Pass the variables you need to use to the page context (Any that can be structured clone serialized)
         cen: cen,
     };
-    const inline_script = (exchange_data) => { // You cannot use `GM APIs` inside this function
-        const cen = exchange_data.cen;
-        console.log('Page scripts context:', window?.browser?.extension);
+    const inlineScript = (exchangeData) => { // You cannot use `GM APIs` inside this function
+        const cen = exchangeData.cen;
+        console.info('Page scripts context:', window?.browser?.runtime);
         const sendmsg = data => window.dispatchEvent(new CustomEvent(cen, { detail: { data: data, from: 'Page scripts' } }));
         window.page_data = 1;
         const simulate = () => {
@@ -56,7 +56,7 @@
 
     // Inject to Page
     const script = document.createElement("script");
-    script.textContent = `(${inline_script})(${JSON.stringify(exchange_data)});`;
+    script.textContent = `(${inlineScript})(${JSON.stringify(exchangeData)}); //# sourceURL=pageInlineScript.js`;
 
     if (document.head) {
         document.head.append(script);
