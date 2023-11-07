@@ -1,0 +1,23 @@
+# env
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# root
+/public
+
+# dir
+node_modules
+build
+built
+dist
+temp
+
+# files
+*.svg
+
+# Ignore files for PNPM, NPM and YARN
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
