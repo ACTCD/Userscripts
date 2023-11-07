@@ -19,44 +19,45 @@
 // ==/UserScript==
 
 (function () {
-    'use strict';
+	"use strict";
 
-    const inline_script = () => {
-        const tlang = navigator.language || 'zh-CN'; // Specified language // 指定语言
-        const cache = { req_url: null, obj_url: null };
-        const XMLHttpRequest_open = XMLHttpRequest.prototype.open;
-        XMLHttpRequest.prototype.open = function () {
-            const url = new URL(arguments[1], location.href);
-            if (url.pathname == '/api/timedtext') {
-                const lang = url.searchParams.get('lang');
-                if (lang && lang != tlang) {
-                    const req_url = url.href;
-                    if (req_url == cache.req_url) {
-                        arguments[1] = cache.obj_url;
-                    } else {
-                        URL.revokeObjectURL(cache.obj_url);
-                        this.addEventListener('load', event => {
-                            cache.req_url = req_url;
-                            cache.obj_url = URL.createObjectURL(new Blob([this.responseText], { type: 'application/json' }));
-                        });
-                        url.searchParams.set('tlang', tlang);
-                        arguments[1] = url.href;
-                    }
-                }
-            }
-            XMLHttpRequest_open.apply(this, arguments);
-        };
-    };
+	const inline_script = () => {
+		const tlang = navigator.language || "zh-CN"; // Specified language // 指定语言
+		const cache = { req_url: null, obj_url: null };
+		const XMLHttpRequest_open = XMLHttpRequest.prototype.open;
+		XMLHttpRequest.prototype.open = function () {
+			const url = new URL(arguments[1], location.href);
+			if (url.pathname == "/api/timedtext") {
+				const lang = url.searchParams.get("lang");
+				if (lang && lang != tlang) {
+					const req_url = url.href;
+					if (req_url == cache.req_url) {
+						arguments[1] = cache.obj_url;
+					} else {
+						URL.revokeObjectURL(cache.obj_url);
+						this.addEventListener("load", (event) => {
+							cache.req_url = req_url;
+							cache.obj_url = URL.createObjectURL(
+								new Blob([this.responseText], { type: "application/json" }),
+							);
+						});
+						url.searchParams.set("tlang", tlang);
+						arguments[1] = url.href;
+					}
+				}
+			}
+			XMLHttpRequest_open.apply(this, arguments);
+		};
+	};
 
-    const script = document.createElement("script");
-    script.textContent = '(' + inline_script + ')();';
+	const script = document.createElement("script");
+	script.textContent = "(" + inline_script + ")();";
 
-    if (document.head) {
-        document.head.append(script);
-    } else {
-        new MutationObserver((mutationList, observer) => {
-            document.head && (observer.disconnect(), document.head.append(script));
-        }).observe(document, { subtree: true, childList: true });
-    }
-
+	if (document.head) {
+		document.head.append(script);
+	} else {
+		new MutationObserver((mutationList, observer) => {
+			document.head && (observer.disconnect(), document.head.append(script));
+		}).observe(document, { subtree: true, childList: true });
+	}
 })();

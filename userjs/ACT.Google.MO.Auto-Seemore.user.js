@@ -18,12 +18,17 @@
 // ==/UserScript==
 
 (function () {
-    'use strict';
+	"use strict";
 
-    window.addEventListener('scroll', () => {
-        if ((window.pageYOffset + window.innerHeight * 2) < document.body.clientHeight) return;
-        let button = document.querySelector("a[aria-label='See more'],a[aria-label='查看更多']");
-        if (button?.style.display !== "none") button?.click();
-    });
-
+	window.addEventListener("scroll", () => {
+		if (
+			window.pageYOffset + window.innerHeight * 2 <
+			document.body.clientHeight
+		)
+			return;
+		let button = document.querySelector(
+			"a[aria-label='See more'],a[aria-label='查看更多']",
+		);
+		if (button?.style.display !== "none") button?.click();
+	});
 })();

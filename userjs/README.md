@@ -5,12 +5,14 @@
 **Script naming specification / 脚本命名规范**
 
 [Prefix].[Website].[Platform].[Action].user.js / [前缀].[网站].[平台].[作用].user.js
+
 - [Prefix] = ACT
 - [Website] = Website name
 - [Platform] = DM/DO/MO (D=Desktop,M=Mobile,O=Only)（D=桌面，M=移动，O=只有）
 - [Action] = Main features
 
 ## Install
+
 Install userscript / 安装用户脚本
 
 ##### [ACT.Douban.MO.Stay.user.js](https://github.com/ACTCD/Userscripts/raw/main/userjs/ACT.Douban.MO.Stay.user.js)

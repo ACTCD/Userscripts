@@ -18,51 +18,61 @@
 // ==/UserScript==
 
 (function () {
-    'use strict';
+	"use strict";
 
-    function cleaner() {
-        document.querySelectorAll('#layers>div').forEach(e => {
-            if (e.style.display == 'none') return;
-            if (e.querySelector('[aria-label="关闭"], [aria-label="Close"], [data-testid="app-bar-close"]')) return;
-            if (e.querySelector('input, [data-testid="TopNavBar"]')) {
-                const b = e.querySelector('[href="/login"]')?.closest('[data-testid="twitter-logged-out-nav"]>div');
-                if (b && b.style.display != 'none') {
-                    b.style.setProperty('display', 'none');
-                    console.info('Navbar login banner:', e);
-                }
-                return;
-            }
-            if (e.querySelector('[href="/login"]')) {
-                e.style.setProperty('display', 'none');
-                return console.info('Bottom login banner:', e);
-            }
-            if (e.querySelector('[href="/signup"]')) {
-                e.style.setProperty('display', 'none');
-                return console.info('Cover login wall:', e);
-            }
-            for (const b of e.querySelectorAll('[role="button"]')) {
-                if (['Log in', 'Sign up', '登录', '注册'].includes(b.innerText)) {
-                    e.style.setProperty('display', 'none');
-                    return console.info('Cover login wall:', e);
-                }
-            }
-        });
-    }
+	function cleaner() {
+		document.querySelectorAll("#layers>div").forEach((e) => {
+			if (e.style.display == "none") return;
+			if (
+				e.querySelector(
+					'[aria-label="关闭"], [aria-label="Close"], [data-testid="app-bar-close"]',
+				)
+			)
+				return;
+			if (e.querySelector('input, [data-testid="TopNavBar"]')) {
+				const b = e
+					.querySelector('[href="/login"]')
+					?.closest('[data-testid="twitter-logged-out-nav"]>div');
+				if (b && b.style.display != "none") {
+					b.style.setProperty("display", "none");
+					console.info("Navbar login banner:", e);
+				}
+				return;
+			}
+			if (e.querySelector('[href="/login"]')) {
+				e.style.setProperty("display", "none");
+				return console.info("Bottom login banner:", e);
+			}
+			if (e.querySelector('[href="/signup"]')) {
+				e.style.setProperty("display", "none");
+				return console.info("Cover login wall:", e);
+			}
+			for (const b of e.querySelectorAll('[role="button"]')) {
+				if (["Log in", "Sign up", "登录", "注册"].includes(b.innerText)) {
+					e.style.setProperty("display", "none");
+					return console.info("Cover login wall:", e);
+				}
+			}
+		});
+	}
 
-    new MutationObserver(cleaner).observe(document, { subtree: true, childList: true });
+	new MutationObserver(cleaner).observe(document, {
+		subtree: true,
+		childList: true,
+	});
 
-    function DOMContentLoaded() {
-        cleaner();
-    }
+	function DOMContentLoaded() {
+		cleaner();
+	}
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', DOMContentLoaded);
-    } else {
-        DOMContentLoaded();
-    }
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", DOMContentLoaded);
+	} else {
+		DOMContentLoaded();
+	}
 
-    const style = document.createElement('style');
-    style.textContent = `/* Global style */
+	const style = document.createElement("style");
+	style.textContent = `/* Global style */
 html { overflow-y: scroll !important; } /* Scroll fix */
 #credential_picker_container { display: none !important; } /* Float Google login */
 /* #layers */
@@ -70,12 +80,11 @@ html { overflow-y: scroll !important; } /* Scroll fix */
 [data-testid="twitter-logged-out-nav"] { height: auto !important; } /* NavBar fix */
 `;
 
-    if (document.head) {
-        document.head.append(style);
-    } else {
-        new MutationObserver((mutationList, observer) => {
-            document.head && (observer.disconnect(), document.head.append(style));
-        }).observe(document, { subtree: true, childList: true });
-    }
-
+	if (document.head) {
+		document.head.append(style);
+	} else {
+		new MutationObserver((mutationList, observer) => {
+			document.head && (observer.disconnect(), document.head.append(style));
+		}).observe(document, { subtree: true, childList: true });
+	}
 })();

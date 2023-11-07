@@ -18,50 +18,65 @@
 // ==/UserScript==
 
 (function () {
-    'use strict';
+	"use strict";
 
-    window.addEventListener('click', event => {
-        const anchor = event.target.closest('a');
-        if (!anchor) return;
-        anchor.removeAttribute('ping');
-        anchor.setAttribute('rel', 'noopener noreferrer');
-        const href = anchor.getAttribute('href');
-        if (!href || href == '#') return;
-        if (['button'].includes(anchor.getAttribute('role'))) return;
-        const url = new URL(href, location);
-        if (href.slice(0, 5) == '/url?') {
-            anchor.href = url.searchParams.get('url') || href;
-        }
-        event.stopImmediatePropagation();
-    }, true);
+	window.addEventListener(
+		"click",
+		(event) => {
+			const anchor = event.target.closest("a");
+			if (!anchor) return;
+			anchor.removeAttribute("ping");
+			anchor.setAttribute("rel", "noopener noreferrer");
+			const href = anchor.getAttribute("href");
+			if (!href || href == "#") return;
+			if (["button"].includes(anchor.getAttribute("role"))) return;
+			const url = new URL(href, location);
+			if (href.slice(0, 5) == "/url?") {
+				anchor.href = url.searchParams.get("url") || href;
+			}
+			event.stopImmediatePropagation();
+		},
+		true,
+	);
 
-    if (location.pathname == '/search') {
-        window.addEventListener('contextmenu', event => {
-            event.stopImmediatePropagation();
-        }, true);
+	if (location.pathname == "/search") {
+		window.addEventListener(
+			"contextmenu",
+			(event) => {
+				event.stopImmediatePropagation();
+			},
+			true,
+		);
 
-        window.addEventListener('mousedown', event => {
-            event.stopImmediatePropagation();
-        }, true);
+		window.addEventListener(
+			"mousedown",
+			(event) => {
+				event.stopImmediatePropagation();
+			},
+			true,
+		);
 
-        window.addEventListener('mouseup', event => {
-            event.stopImmediatePropagation();
-        }, true);
-    }
+		window.addEventListener(
+			"mouseup",
+			(event) => {
+				event.stopImmediatePropagation();
+			},
+			true,
+		);
+	}
 
-    const inline_script = () => {
-        window.navigator.sendBeacon = () => console.log('BAN: Beacon');
-    };
+	const inline_script = () => {
+		window.navigator.sendBeacon = () => console.log("BAN: Beacon");
+	};
 
-    const script = document.createElement("script");
-    script.textContent = '(' + inline_script + ')();';
+	const script = document.createElement("script");
+	script.textContent = "(" + inline_script + ")();";
 
-    if (document.head) {
-        document.head.append(script);
-    } else {
-        new MutationObserver((mutationList, observer) => {
-            document.head && (observer.disconnect(), document.head.append(script));
-        }).observe(document, { subtree: true, childList: true });
-    }
-
+	if (document.head) {
+		document.head.append(script);
+	} else {
+		new MutationObserver((mutationList, observer) => {
+			document.head && (observer.disconnect(), document.head.append(script));
+		}).observe(document, { subtree: true, childList: true });
+	}
 })();

@@ -18,31 +18,36 @@
 // ==/UserScript==
 
 (function () {
-    'use strict';
+	"use strict";
 
-    function cleaner() {
-        document.querySelector("header")?.style.setProperty("position", "absolute"); // Release top space
-        document.querySelector(".homepage_nav")?.style.setProperty("position", "absolute"); // Release top space
-        document.querySelector("#clickForMore")?.click(); // Content collapse
-        document.querySelector(".header_moblink")?.remove(); // Header App banner
-        document.querySelector(".listen_btn")?.remove(); // Embed App banner
-        document.querySelector("#moblink_moreread")?.remove(); // Embed App banner
-        document.querySelector("#hotCommentsDiv")?.remove(); // Embed App banner
-        document.querySelector("#bottomBanner")?.remove(); // Footer App banner
-        document.querySelector("#recommend")?.remove(); // Recommended
-        document.querySelector("#newDetailHotRecommend")?.remove(); // Recommended
-    }
+	function cleaner() {
+		document.querySelector("header")?.style.setProperty("position", "absolute"); // Release top space
+		document
+			.querySelector(".homepage_nav")
+			?.style.setProperty("position", "absolute"); // Release top space
+		document.querySelector("#clickForMore")?.click(); // Content collapse
+		document.querySelector(".header_moblink")?.remove(); // Header App banner
+		document.querySelector(".listen_btn")?.remove(); // Embed App banner
+		document.querySelector("#moblink_moreread")?.remove(); // Embed App banner
+		document.querySelector("#hotCommentsDiv")?.remove(); // Embed App banner
+		document.querySelector("#bottomBanner")?.remove(); // Footer App banner
+		document.querySelector("#recommend")?.remove(); // Recommended
+		document.querySelector("#newDetailHotRecommend")?.remove(); // Recommended
+	}
 
-    new MutationObserver(cleaner).observe(document, { subtree: true, childList: true, attributes: true });
+	new MutationObserver(cleaner).observe(document, {
+		subtree: true,
+		childList: true,
+		attributes: true,
+	});
 
-    function DOMContentLoaded() {
-        cleaner();
-    }
+	function DOMContentLoaded() {
+		cleaner();
+	}
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', DOMContentLoaded);
-    } else {
-        DOMContentLoaded();
-    }
-
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", DOMContentLoaded);
+	} else {
+		DOMContentLoaded();
+	}
 })();
