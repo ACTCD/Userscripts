@@ -4,7 +4,7 @@
 // @description        No country redirect, easy to switch region/language.
 // @description:zh-CN  没有国家重定向，轻松切换区域/语言。
 // @author             ACTCD
-// @version            20220722.1
+// @version            20231206.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -215,12 +215,19 @@
 
 	if (window.top !== window.self) return; // @noframes
 	if (location.pathname == "/url") return;
-	if (location.pathname.startsWith("/sorry/")) return;
 	const plang = navigator.language; // Preferred language // 首选语言
 	const slang = "en-US"; // Second language // 第二语言
 	const is_zh = ["ZH", "ZH-CN"].includes(plang.toUpperCase());
 	const o_url = new URL(location);
-	let url = new URL(location);
+	let url;
+	// captcha
+	if (location.pathname.startsWith("/sorry/index")) {
+		const _continue = o_url.searchParams.get("continue");
+		if (!_continue) return;
+		url = new URL(_continue);
+	} else {
+		url = new URL(location);
+	}
 	let pfull = plang;
 	let region = "AUTO"; // Current Region // 当前区域
 	if (plang.length == 5 && plang[2] == "-") {
@@ -232,9 +239,13 @@
 	}
 	url.searchParams.set("hl", plang);
 	url.searchParams.delete("client");
+	const _index = url.hostname.indexOf("google.");
+	if (_index < 0) return;
+	const current_domian = url.hostname.slice(_index);
 	const default_domain = "google.com";
-	const current_domian = location.hostname.match(/google\.[^\/]+/)?.[0];
-	if (current_domian && current_domian != default_domain) {
+	if (current_domian === default_domain) {
+		if (location.pathname.startsWith("/sorry/index")) return; // captcha
+	} else {
 		if (navigator.cookieEnabled) {
 			url.hostname = location.hostname.replace(current_domian, default_domain);
 			url.href = "https://www.google.com/ncr#ncr:" + encodeURIComponent(url);
