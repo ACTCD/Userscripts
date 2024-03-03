@@ -11,6 +11,6 @@
 // ==/UserScript==
 
 (function () {
-    'use strict';
-    alert(`jQuery: ${window?.jQuery?.fn?.jquery ?? 'unload'}`);
+	"use strict";
+	alert(`jQuery: ${window?.jQuery?.fn?.jquery ?? "unload"}`);
 })();
