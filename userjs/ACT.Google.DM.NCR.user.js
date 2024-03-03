@@ -4,7 +4,7 @@
 // @description        No country redirect, easy to switch region/language.
 // @description:zh-CN  没有国家重定向，轻松切换区域/语言。
 // @author             ACTCD
-// @version            20220722.1
+// @version            20231206.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts#contact
@@ -211,120 +211,195 @@
 // https://www.google.com/supported_domains
 
 (function () {
-    'use strict';
+	"use strict";
 
-    if (window.top !== window.self) return; // @noframes
-    if (location.pathname == '/url') return;
-    if (location.pathname.startsWith('/sorry/')) return;
-    const plang = navigator.language; // Preferred language // 首选语言
-    const slang = 'en-US'; // Second language // 第二语言
-    const is_zh = ['ZH', 'ZH-CN'].includes(plang.toUpperCase());
-    const o_url = new URL(location);
-    let url = new URL(location);
-    let pfull = plang;
-    let region = 'AUTO'; // Current Region // 当前区域
-    if (plang.length == 5 && plang[2] == '-') {
-        region = plang.slice(-2).toUpperCase();
-        url.searchParams.set("gl", region);
-    } else {
-        pfull = plang + '-' + region;
-        url.searchParams.delete("gl");
-    }
-    url.searchParams.set("hl", plang);
-    url.searchParams.delete("client");
-    const default_domain = 'google.com';
-    const current_domian = location.hostname.match(/google\.[^\/]+/)?.[0];
-    if (current_domian && current_domian != default_domain) {
-        if (navigator.cookieEnabled) {
-            url.hostname = location.hostname.replace(current_domian, default_domain);
-            url.href = 'https://www.google.com/ncr#ncr:' + encodeURIComponent(url);
-            window.stop();
-            location.replace(url);
-            return;
-        } else {
-            if (is_zh) {
-                alert('[ACT.谷歌.DM.NCR]:\nCookie 已禁用，NCR 功能将不会生效。请检查浏览器设置。');
-            } else {
-                alert('[ACT.Google.DM.NCR]:\nCookies disabled, the NCR feature will not be active. Please check the browser settings.');
-            }
-        }
-    }
-    if (o_url.hash.slice(0, 5) == '#ncr:') {
-        location.hash = '';
-        window.stop();
-        location.replace(decodeURIComponent(o_url.hash.slice(5)));
-        return;
-    }
+	if (window.top !== window.self) return; // @noframes
+	if (location.pathname == "/url") return;
+	const plang = navigator.language; // Preferred language // 首选语言
+	const slang = "en-US"; // Second language // 第二语言
+	const is_zh = ["ZH", "ZH-CN"].includes(plang.toUpperCase());
+	const o_url = new URL(location);
+	let url;
+	// captcha
+	if (location.pathname.startsWith("/sorry/index")) {
+		const _continue = o_url.searchParams.get("continue");
+		if (!_continue) return;
+		url = new URL(_continue);
+	} else {
+		url = new URL(location);
+	}
+	let pfull = plang;
+	let region = "AUTO"; // Current Region // 当前区域
+	if (plang.length == 5 && plang[2] == "-") {
+		region = plang.slice(-2).toUpperCase();
+		url.searchParams.set("gl", region);
+	} else {
+		pfull = plang + "-" + region;
+		url.searchParams.delete("gl");
+	}
+	url.searchParams.set("hl", plang);
+	url.searchParams.delete("client");
+	const _index = url.hostname.indexOf("google.");
+	if (_index < 0) return;
+	const current_domian = url.hostname.slice(_index);
+	const default_domain = "google.com";
+	if (current_domian === default_domain) {
+		if (location.pathname.startsWith("/sorry/index")) return; // captcha
+	} else {
+		if (navigator.cookieEnabled) {
+			url.hostname = location.hostname.replace(current_domian, default_domain);
+			url.href = "https://www.google.com/ncr#ncr:" + encodeURIComponent(url);
+			window.stop();
+			location.replace(url);
+			return;
+		} else {
+			if (is_zh) {
+				alert(
+					"[ACT.谷歌.DM.NCR]:\nCookie 已禁用，NCR 功能将不会生效。请检查浏览器设置。",
+				);
+			} else {
+				alert(
+					"[ACT.Google.DM.NCR]:\nCookies disabled, the NCR feature will not be active. Please check the browser settings.",
+				);
+			}
+		}
+	}
+	if (o_url.hash.slice(0, 5) == "#ncr:") {
+		location.hash = "";
+		window.stop();
+		location.replace(decodeURIComponent(o_url.hash.slice(5)));
+		return;
+	}
 
-    const r1 = region;
-    const r2 = region == slang.toUpperCase().slice(-2) ? 'AUTO' : slang.slice(-2);
-    const l1 = plang;
-    const l2 = plang.toUpperCase() == slang.toUpperCase() ? 'AUTO' : slang;
-    const langbar = document.createElement('div');
-    const langbar_ = document.createElement('div');
-    const langbar_r = document.createElement('div');
-    const langbar_r_r1 = document.createElement('span');
-    const langbar_r_r2 = document.createElement('span');
-    const langbar_l = document.createElement('div');
-    const langbar_l_l1 = document.createElement('span');
-    const langbar_l_l2 = document.createElement('span');
-    const langbar_s = document.createElement('div');
-    const langbar_s_t = document.createElement('span');
-    langbar.className = 'act_langbar appbar mnr-c';
-    langbar_.className = 'card-section mnr-c';
-    langbar_r.textContent = is_zh ? '区域:' : 'REGION:';
-    langbar_l.textContent = is_zh ? '语言:' : 'LANGUAGE:';
-    langbar_s.textContent = is_zh ? '区域&语言:' : 'R&L:';
-    langbar_r_r1.textContent = r1.toUpperCase();
-    langbar_r_r2.textContent = r2.toUpperCase();
-    langbar_l_l1.textContent = l1.toUpperCase();
-    langbar_l_l2.textContent = l2.toUpperCase();
-    langbar_r.append(langbar_r_r1, langbar_r_r2);
-    langbar_l.append(langbar_l_l1, langbar_l_l2);
-    langbar_s.append(langbar_s_t);
-    langbar_.append(langbar_r, langbar_l, langbar_s);
-    langbar.append(langbar_);
-    let gl = r1, hl = plang, ss = 0;
-    const ogl = o_url.searchParams.get("gl");
-    const ohl = o_url.searchParams.get("hl");
-    const safe_echo = s => (s.match(/^[a-zA-Z]{2}(?:-[a-zA-Z]{2})?$/)?.[0] || 'N/A').toUpperCase();;
-    switch (ogl?.toUpperCase()) { // Region
-        case r1.toUpperCase(): langbar_r_r1.className = 'act'; gl = r2; break;
-        case r2.toUpperCase(): langbar_r_r2.className = 'act'; gl = r1; break;
-        case undefined: r1 == 'AUTO' ? (langbar_r_r1.className = 'act', gl = r2) : (langbar_r_r2.className = 'act', langbar_r_r2.textContent = 'AUTO', ss++); break;
-        default: langbar_r_r2.className = 'act'; langbar_r_r2.textContent = safe_echo(ogl); ss++;
-    }
-    switch (ohl?.toUpperCase()) { // Language
-        case plang.toUpperCase(): langbar_l_l1.className = 'act'; hl = l2; langbar_s_t.textContent = slang.toUpperCase(); break;
-        case slang.toUpperCase(): langbar_l_l2.className = 'act'; hl = l1; langbar_s_t.textContent = pfull.toUpperCase(); break;
-        case undefined: langbar_l_l2.className = 'act'; langbar_l_l2.textContent = 'AUTO'; ss++; break;
-        default: langbar_l_l2.className = 'act'; langbar_l_l2.textContent = safe_echo(ohl); ss++;
-    }
-    let sgl = gl, shl = hl;
-    if ([r2, l2].includes('AUTO')) {
-        ss > 1 && (sgl = r1, shl = l1, langbar_s_t.textContent = l1.toUpperCase());
-        ss < 2 && langbar_s.remove();
-    } else {
-        ss && (sgl = r2, shl = l2, langbar_s_t.textContent = l2.toUpperCase());
-        ss || hl.endsWith(gl) || langbar_s.remove();
-    }
-    url = new URL(location);
-    langbar_r.addEventListener('click', event => {
-        gl == 'AUTO' ? url.searchParams.delete("gl") : url.searchParams.set("gl", gl);
-        location.replace(url);
-    }, true);
-    langbar_l.addEventListener('click', event => {
-        if (langbar_l_l2.textContent === '') return;
-        hl == 'AUTO' ? url.searchParams.delete("hl") : url.searchParams.set("hl", hl);
-        location.replace(url);
-    }, true);
-    langbar_s.addEventListener('click', event => {
-        sgl == 'AUTO' ? url.searchParams.delete("gl") : url.searchParams.set("gl", sgl);
-        shl == 'AUTO' ? url.searchParams.delete("hl") : url.searchParams.set("hl", shl);
-        location.replace(url);
-    }, true);
-    const langbar_style = document.createElement('style');
-    langbar_style.textContent = `
+	const r1 = region;
+	const r2 = region == slang.toUpperCase().slice(-2) ? "AUTO" : slang.slice(-2);
+	const l1 = plang;
+	const l2 = plang.toUpperCase() == slang.toUpperCase() ? "AUTO" : slang;
+	const langbar = document.createElement("div");
+	const langbar_ = document.createElement("div");
+	const langbar_r = document.createElement("div");
+	const langbar_r_r1 = document.createElement("span");
+	const langbar_r_r2 = document.createElement("span");
+	const langbar_l = document.createElement("div");
+	const langbar_l_l1 = document.createElement("span");
+	const langbar_l_l2 = document.createElement("span");
+	const langbar_s = document.createElement("div");
+	const langbar_s_t = document.createElement("span");
+	langbar.className = "act_langbar appbar mnr-c";
+	langbar_.className = "card-section mnr-c";
+	langbar_r.textContent = is_zh ? "区域:" : "REGION:";
+	langbar_l.textContent = is_zh ? "语言:" : "LANGUAGE:";
+	langbar_s.textContent = is_zh ? "区域&语言:" : "R&L:";
+	langbar_r_r1.textContent = r1.toUpperCase();
+	langbar_r_r2.textContent = r2.toUpperCase();
+	langbar_l_l1.textContent = l1.toUpperCase();
+	langbar_l_l2.textContent = l2.toUpperCase();
+	langbar_r.append(langbar_r_r1, langbar_r_r2);
+	langbar_l.append(langbar_l_l1, langbar_l_l2);
+	langbar_s.append(langbar_s_t);
+	langbar_.append(langbar_r, langbar_l, langbar_s);
+	langbar.append(langbar_);
+	let gl = r1,
+		hl = plang,
+		ss = 0;
+	const ogl = o_url.searchParams.get("gl");
+	const ohl = o_url.searchParams.get("hl");
+	const safe_echo = (s) =>
+		(s.match(/^[a-zA-Z]{2}(?:-[a-zA-Z]{2})?$/)?.[0] || "N/A").toUpperCase();
+	switch (
+		ogl?.toUpperCase() // Region
+	) {
+		case r1.toUpperCase():
+			langbar_r_r1.className = "act";
+			gl = r2;
+			break;
+		case r2.toUpperCase():
+			langbar_r_r2.className = "act";
+			gl = r1;
+			break;
+		case undefined:
+			r1 == "AUTO"
+				? ((langbar_r_r1.className = "act"), (gl = r2))
+				: ((langbar_r_r2.className = "act"),
+				  (langbar_r_r2.textContent = "AUTO"),
+				  ss++);
+			break;
+		default:
+			langbar_r_r2.className = "act";
+			langbar_r_r2.textContent = safe_echo(ogl);
+			ss++;
+	}
+	switch (
+		ohl?.toUpperCase() // Language
+	) {
+		case plang.toUpperCase():
+			langbar_l_l1.className = "act";
+			hl = l2;
+			langbar_s_t.textContent = slang.toUpperCase();
+			break;
+		case slang.toUpperCase():
+			langbar_l_l2.className = "act";
+			hl = l1;
+			langbar_s_t.textContent = pfull.toUpperCase();
+			break;
+		case undefined:
+			langbar_l_l2.className = "act";
+			langbar_l_l2.textContent = "AUTO";
+			ss++;
+			break;
+		default:
+			langbar_l_l2.className = "act";
+			langbar_l_l2.textContent = safe_echo(ohl);
+			ss++;
+	}
+	let sgl = gl,
+		shl = hl;
+	if ([r2, l2].includes("AUTO")) {
+		ss > 1 &&
+			((sgl = r1), (shl = l1), (langbar_s_t.textContent = l1.toUpperCase()));
+		ss < 2 && langbar_s.remove();
+	} else {
+		ss &&
+			((sgl = r2), (shl = l2), (langbar_s_t.textContent = l2.toUpperCase()));
+		ss || hl.endsWith(gl) || langbar_s.remove();
+	}
+	url = new URL(location);
+	langbar_r.addEventListener(
+		"click",
+		(event) => {
+			gl == "AUTO"
+				? url.searchParams.delete("gl")
+				: url.searchParams.set("gl", gl);
+			location.replace(url);
+		},
+		true,
+	);
+	langbar_l.addEventListener(
+		"click",
+		(event) => {
+			if (langbar_l_l2.textContent === "") return;
+			hl == "AUTO"
+				? url.searchParams.delete("hl")
+				: url.searchParams.set("hl", hl);
+			location.replace(url);
+		},
+		true,
+	);
+	langbar_s.addEventListener(
+		"click",
+		(event) => {
+			sgl == "AUTO"
+				? url.searchParams.delete("gl")
+				: url.searchParams.set("gl", sgl);
+			shl == "AUTO"
+				? url.searchParams.delete("hl")
+				: url.searchParams.set("hl", shl);
+			location.replace(url);
+		},
+		true,
+	);
+	const langbar_style = document.createElement("style");
+	langbar_style.textContent = `
 .act_langbar {
     line-height: 2;
     margin-bottom: 6px;
@@ -360,21 +435,24 @@
 }
 `;
 
-    if (document.head) {
-        document.head.append(langbar_style);
-    } else {
-        new MutationObserver((mutationList, observer) => {
-            document.head && (observer.disconnect(), document.head.append(langbar_style));
-        }).observe(document, { subtree: true, childList: true });
-    }
+	if (document.head) {
+		document.head.append(langbar_style);
+	} else {
+		new MutationObserver((mutationList, observer) => {
+			document.head &&
+				(observer.disconnect(), document.head.append(langbar_style));
+		}).observe(document, { subtree: true, childList: true });
+	}
 
-    if (document.querySelector('#appbar')) {
-        document.querySelector('#appbar')?.after(langbar);
-    } else {
-        new MutationObserver((mutationList, observer) => {
-            document.querySelector('#appbar') && (observer.disconnect(), document.querySelector('#appbar')?.after(langbar));
-            document.readyState == "complete" && observer.disconnect();
-        }).observe(document, { subtree: true, childList: true });
-    }
-
+	if (document.querySelector("#appbar")) {
+		document.querySelector("#appbar")?.after(langbar);
+	} else {
+		new MutationObserver((mutationList, observer) => {
+			if (document.querySelector("#appbar")) {
+				observer.disconnect();
+				document.querySelector("#appbar")?.after(langbar);
+			}
+			document.readyState == "complete" && observer.disconnect();
+		}).observe(document, { subtree: true, childList: true });
+	}
 })();
