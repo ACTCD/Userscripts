@@ -2,7 +2,7 @@
 // @name               DEBUG.ExchangeDataDemo
 // @description        You don't need `unsafeWindow` to exchange data.
 // @author             ACTCD
-// @version            20231022.1
+// @version            20240303.1
 // @license            GPL-3.0-or-later
 // @namespace          ACTCD/Userscripts
 // @supportURL         https://github.com/ACTCD/Userscripts
@@ -18,7 +18,7 @@
 (function () {
 	"use strict";
 
-	// Content scripts
+	// Content scripts context
 	const cen = btoa(Math.random()).slice(3, 9);
 	console.info("Custom Event name:", cen);
 	console.info("Content scripts context:", window?.browser?.runtime);
@@ -41,12 +41,13 @@
 		);
 	});
 
-	// Page scripts
+	// Page scripts wrapper
 	const exchangeData = {
 		// Pass the variables you need to use to the page context (Any that can be structured clone serialized)
 		cen: cen,
 	};
 	const inlineScript = (exchangeData) => {
+		// Page scripts context
 		// You cannot use `GM APIs` inside this function
 		const cen = exchangeData.cen;
 		console.info("Page scripts context:", window?.browser?.runtime);
@@ -65,15 +66,12 @@
 		);
 	};
 
-	// Inject to Page
+	// Inject to Page with closed-shadow-root
+	const div = document.createElement("div");
+	div.style.display = "none";
+	const shadowRoot = div.attachShadow({ mode: "closed" });
 	const script = document.createElement("script");
 	script.textContent = `(${inlineScript})(${JSON.stringify(exchangeData)}); //# sourceURL=pageInlineScript.js`;
-
-	if (document.head) {
-		document.head.append(script);
-	} else {
-		new MutationObserver((mutationList, observer) => {
-			document.head && (observer.disconnect(), document.head.append(script));
-		}).observe(document, { subtree: true, childList: true });
-	}
+	shadowRoot.append(script);
+	(document.body ?? document.head ?? document.documentElement).append(div);
 })();
